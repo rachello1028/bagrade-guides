@@ -357,6 +357,7 @@
       <a href="#ch7">第七章</a>
       <a href="#review">總複習</a>
       <a href="#exam">複習卷</a>
+      <a href="#exam2">段考2</a>
     </nav>
     <button class="tbtn" id="theme" title="切換深淺色" aria-label="切換深淺色">◐</button>
   </div>
@@ -454,6 +455,11 @@
       <a class="chap" href="#exam">
         <div class="cn">複習卷</div><h3>段考型複習卷（全學期綜合）</h3>
         <p>七章綜合 22 題，作答後看分數與檢討。</p>
+        <span class="st ready">✓ 完整成品</span>
+      </a>
+      <a class="chap" href="#exam2">
+        <div class="cn">第二次段考</div><h3>第二次段考卷（隋唐・宋・元）</h3>
+        <p>第 3～5 章範圍 15 題，作答後看分數與檢討。</p>
         <span class="st ready">✓ 完整成品</span>
       </a>
     </div>
@@ -1250,6 +1256,18 @@
     </div>
   </section>
 
+  <!-- ================= 第二次段考卷 ================= -->
+  <section id="exam2">
+    <div class="sec-head"><span class="sec-num">TEST 2</span><h2>第二次段考卷：隋唐・宋・元</h2></div>
+    <p class="gps-note">範圍＝第 3～5 章（隋唐／宋／元），共 15 題。<b>先全部作答，再按「交卷」看分數與檢討</b>。全部原創題。</p>
+    <div class="exam-score" id="exam2Score" hidden></div>
+    <div id="exam2Body"></div>
+    <div class="exam-actions">
+      <button class="exam-btn" id="exam2Submit">交卷看分數</button>
+      <button class="exam-btn ghost" id="exam2Reset">重作</button>
+    </div>
+  </section>
+
   <footer>
     <p class="disc">本講義為原創教學設計，不抄錄歷屆會考或學校試卷；題目均依公開試題的<b>題型與考點</b>重新設計。內容以翰林／康軒／南一三版本共同核心為準，實際授課請對照學生使用版本。</p>
     <p>《八年級歷史：不用死背的中國史》· 第一章 完整成品 · 其餘章節製作中</p>
@@ -1575,33 +1593,32 @@
     {type:'近代',stem:'課本把鴉片戰爭、英法聯軍、甲午、八國聯軍放一起討論，主要想讓學生理解？',opts:['四個無關的獨立事件','外國勢力逐步加深、清朝壓力不斷增加的一條脈絡','都發生在同一年','都是中國主動發動'],ans:1,exp:'重點是看出「列強勢力一步步加深」的同一條故事線，而非背順序。'}
   ];
 
-  var examBody=document.getElementById('examBody');
-  function renderExam(){
-    if(!examBody)return;
-    examBody.innerHTML=examQs.map(function(q,qi){
-      var opts=q.opts.map(function(o,oi){
-        return '<li data-o="'+oi+'"><span class="lab">'+LAB[oi]+'</span>'+o+'</li>';
+  function makeExam(prefix, arr){
+    var body=document.getElementById(prefix+'Body'); if(!body)return;
+    function render(){
+      body.innerHTML=arr.map(function(q,qi){
+        var opts=q.opts.map(function(o,oi){
+          return '<li data-o="'+oi+'"><span class="lab">'+LAB[oi]+'</span>'+o+'</li>';
+        }).join('');
+        return '<div class="quiz"><span class="exam-num">第 '+(qi+1)+' 題</span>'+
+          '<span class="qtype">'+q.type+'</span><div class="stem">'+q.stem+'</div>'+
+          '<ul class="opts" data-ans="'+q.ans+'" data-sel="-1">'+opts+'</ul>'+
+          '<div class="exp" hidden><b>解析：</b>'+q.exp+'</div></div>';
       }).join('');
-      return '<div class="quiz"><span class="exam-num">第 '+(qi+1)+' 題</span>'+
-        '<span class="qtype">'+q.type+'</span><div class="stem">'+q.stem+'</div>'+
-        '<ul class="opts" data-ans="'+q.ans+'" data-sel="-1">'+opts+'</ul>'+
-        '<div class="exp" hidden><b>解析：</b>'+q.exp+'</div></div>';
-    }).join('');
-  }
-  if(examBody){
-    renderExam();
-    examBody.addEventListener('click',function(e){
-      if(examBody.dataset.graded)return;
+    }
+    render();
+    body.addEventListener('click',function(e){
+      if(body.dataset.graded)return;
       var li=e.target.closest('li[data-o]'); if(!li)return;
       var ul=li.parentNode;
       [].forEach.call(ul.children,function(c){c.classList.remove('sel');});
       li.classList.add('sel'); ul.dataset.sel=li.dataset.o;
     });
-    document.getElementById('examSubmit').addEventListener('click',function(){
-      if(examBody.dataset.graded)return;
-      examBody.dataset.graded='1';
-      var correct=0, total=examQs.length, blank=0;
-      [].forEach.call(examBody.querySelectorAll('.opts'),function(ul){
+    document.getElementById(prefix+'Submit').addEventListener('click',function(){
+      if(body.dataset.graded)return;
+      body.dataset.graded='1';
+      var correct=0, total=arr.length, blank=0;
+      [].forEach.call(body.querySelectorAll('.opts'),function(ul){
         var ans=+ul.dataset.ans, sel=+ul.dataset.sel;
         if(sel<0)blank++;
         if(sel===ans)correct++;
@@ -1616,17 +1633,38 @@
       var score=Math.round(correct/total*100);
       var msg=score>=90?'太強了，這份幾乎滿分！':score>=70?'不錯！把錯的幾題看一下解析就穩了。':score>=50?'及格邊緣，把錯題的觀念補起來再考一次。':'先別緊張，照著解析把歷史骨架重看一遍，會進步很快。';
       if(blank>0)msg+='（有 '+blank+' 題未作答）';
-      var sc=document.getElementById('examScore');
+      var sc=document.getElementById(prefix+'Score');
       sc.innerHTML='<div class="n">'+correct+' / '+total+'（'+score+' 分）</div><div class="msg">'+msg+'</div>';
       sc.hidden=false;
       sc.scrollIntoView({behavior:'smooth',block:'center'});
     });
-    document.getElementById('examReset').addEventListener('click',function(){
-      delete examBody.dataset.graded;
-      var sc=document.getElementById('examScore'); sc.hidden=true; sc.innerHTML='';
-      renderExam();
-      document.getElementById('exam').scrollIntoView({behavior:'smooth',block:'start'});
+    document.getElementById(prefix+'Reset').addEventListener('click',function(){
+      delete body.dataset.graded;
+      var sc=document.getElementById(prefix+'Score'); sc.hidden=true; sc.innerHTML='';
+      render();
+      document.getElementById(prefix).scrollIntoView({behavior:'smooth',block:'start'});
     });
   }
+
+  var exam2Qs=[
+    {type:'隋唐',stem:'某制度讓人民透過考試取得做官資格，打破門第限制。它「最早開始」於哪一朝？',opts:['漢','隋','唐','宋'],ans:1,exp:'科舉最早開始於隋（完備於唐）。'},
+    {type:'隋唐',stem:'題目問「大運河的影響」，最恰當的答案是？',opts:['直接造成隋朝滅亡','連通南北、促進交通與經濟交流','使北方人口銳減','讓中國鎖國'],ans:1,exp:'大運河影響＝促進南北交通與經濟交流；看到楊廣就選「隋亡」是陷阱。'},
+    {type:'隋唐',stem:'唐代中央分三個部門分工又互相牽制，以提高效率、避免權力過度集中。這是？',opts:['郡縣制','三省六部','推恩令','軍機處'],ans:1,exp:'三省六部（唐）＝中央分工制衡。'},
+    {type:'隋唐',stem:'關於隋與唐的關係，最貼切的是？',opts:['唐建制度、隋推翻','隋建立多項新制度，唐承接並發揚走向盛世','兩者無關','都是短命王朝'],ans:1,exp:'隋建立系統（科舉、大運河）、唐把系統玩到高峰。'},
+    {type:'隋唐',stem:'唐朝長安聚集各國使節、遣唐使，極為國際化。這種開放氣度主要承接自？',opts:['嚴格鎖國','魏晉南北朝以來的民族融合','軍事極弱的討好','沒有他國'],ans:1,exp:'唐的國際化承接魏晉南北朝的民族大融合。'},
+    {type:'宋',stem:'宋朝對外常居弱勢，經濟文化卻達高峰。最能解釋的是？',opts:['放棄國防','重文輕武帶來安定，經濟文化蓬勃','周邊無強敵','軍事最強'],ans:1,exp:'重文輕武：軍事弱、外患多，但經濟文化衝上巔峰。'},
+    {type:'宋',stem:'關於印刷術、指南針、火藥與宋朝的關係，最精準的是？',opts:['宋朝憑空發明','宋代成熟並廣泛應用','清朝才出現','與宋無關'],ans:1,exp:'正確講法是「宋代成熟、廣泛應用」，不是發明。'},
+    {type:'宋',stem:'宋代出現可代替金屬貨幣、便於攜帶交易的紙製憑證，這是？',opts:['交子','市舶司','推恩令','軍機處'],ans:0,exp:'交子＝世界最早的紙幣，反映宋代商業發達。'},
+    {type:'宋',stem:'中國「經濟重心南移」的「完成」時間是？',opts:['魏晉南北朝','南宋','秦朝','唐初'],ans:1,exp:'開始＝魏晉南北朝、完成＝南宋。'},
+    {type:'宋',stem:'一幅名畫描繪北宋開封街市商店林立、夜晚仍營業。它最能反映宋代的？',opts:['軍事強盛','城市商業繁榮','對外鎖國','人口銳減'],ans:1,exp:'《清明上河圖》反映宋代城市商業繁榮（夜市、坊市合一）。'},
+    {type:'元',stem:'元朝時東西方交流空前頻繁，主因是？',opts:['嚴格鎖國','蒙古帝國橫跨歐亞、打通東西交通','只有元朝存在','海路中斷'],ans:1,exp:'元的核心關鍵字是「交流」——蒙古橫跨歐亞、交通打通。'},
+    {type:'元',stem:'一位義大利旅行家來到中國、留下遊記向歐洲描述東方富庶。這代表哪一朝的特色？',opts:['漢的絲路','唐的遣唐使','元的東西交流','宋的海上貿易'],ans:2,exp:'馬可波羅＝元朝東西交流的招牌人物。'},
+    {type:'元',stem:'元朝在地方設「行省」管理疆域。最易與它混淆但性質不同的是？',opts:['唐的三省六部','秦的郡縣制','漢的推恩令','宋的重文輕武'],ans:0,exp:'行省（元·地方）≠ 三省六部（唐·中央），都有「省」字最易混。'},
+    {type:'元',stem:'關於元朝在中國歷史上的特殊地位，正確的是？',opts:['漢族建立的王朝','中國第一個由少數民族（蒙古）建立的大一統王朝','從未統一中國','與外界無往來'],ans:1,exp:'元是中國史上第一個由少數民族建立的大一統王朝。'},
+    {type:'綜合',stem:'依時間先後，下列朝代排列正確的是？',opts:['隋 → 唐 → 宋 → 元','唐 → 隋 → 元 → 宋','宋 → 隋 → 唐 → 元','元 → 宋 → 唐 → 隋'],ans:0,exp:'第二次段考範圍的時序：隋 → 唐 → 宋 → 元。'}
+  ];
+
+  makeExam('exam', examQs);
+  makeExam('exam2', exam2Qs);
 })();
 </script>
