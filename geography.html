@@ -1,0 +1,1389 @@
+<title>不用死背的中國地理</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;700;900&family=Noto+Sans+TC:wght@400;500;700&display=swap');
+
+  :root{
+    /* 宣紙米 + 山林綠 + 墨 */
+    --paper:#f7f1e3;
+    --paper-2:#fffdf7;
+    --card:#fffdf7;
+    --ink:#2b2620;
+    --ink-soft:#5f574b;
+    --line:#e2d7bf;
+    --line-strong:#d3c39e;
+    --brand:#26734a;        /* 山林綠 / 主線 */
+    --brand-soft:#d9ebe0;
+    --gold:#e8b53c;         /* 口訣 highlighter */
+    --gold-soft:#fbedc6;
+    --warn:#d9722e;         /* 會考陷阱（邊框/強調）*/
+    --warn-soft:#f8e3d0;
+    --warn-ink:#9c4a15;     /* 陷阱框文字（淺底加深）*/
+    --sky:#3a6ea5;          /* 圖表 / 老師講解 */
+    --sky-soft:#dde8f3;
+    --shadow:0 1px 2px rgba(60,45,20,.06), 0 8px 24px rgba(60,45,20,.07);
+    --radius:14px;
+    --maxw:940px;
+    --serif:"Noto Serif TC", "Songti TC", serif;
+    --sans:"Noto Sans TC", system-ui, sans-serif;
+  }
+  :root:not([data-theme="light"]){
+    @media (prefers-color-scheme: dark){
+      --paper:#191612;--paper-2:#221e18;--card:#221e18;
+      --ink:#efe7d6;--ink-soft:#b6ab97;--line:#3a3227;--line-strong:#4a4033;
+      --brand:#5cbd8a;--brand-soft:#143026;
+      --gold:#f0c766;--gold-soft:#3a3016;
+      --warn:#eb9457;--warn-soft:#3a2717;--warn-ink:#f0a877;
+      --sky:#7ba7d6;--sky-soft:#1b2a3a;
+      --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#191612;--paper-2:#221e18;--card:#221e18;
+    --ink:#efe7d6;--ink-soft:#b6ab97;--line:#3a3227;--line-strong:#4a4033;
+    --brand:#5cbd8a;--brand-soft:#143026;
+    --gold:#f0c766;--gold-soft:#3a3016;
+    --warn:#eb9457;--warn-soft:#3a2717;--warn-ink:#f0a877;
+    --sky:#7ba7d6;--sky-soft:#1b2a3a;
+    --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.35);
+  }
+
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);
+    font-family:var(--sans);line-height:1.75;font-size:16px;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding-inline:20px}
+  p{margin:12px 0}
+  .body p, .body li{color:var(--ink)}   /* 基礎排版：先定義，元件規則寫在後面才蓋得過 */
+  strong{color:var(--brand)}
+
+  /* ---------- 頂部列 ---------- */
+  header.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;
+    background:color-mix(in srgb, var(--paper) 88%, transparent);
+    backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .bar-in{max-width:var(--maxw);margin:0 auto;padding:10px 20px;display:flex;align-items:center;gap:14px}
+  .brand{display:flex;align-items:center;gap:9px;font-family:var(--serif);
+    font-weight:900;font-size:16px;letter-spacing:.02em;white-space:nowrap}
+  .seal{width:30px;height:30px;flex:none;border-radius:7px;background:var(--brand);
+    color:#fff;display:grid;place-items:center;font-family:var(--serif);
+    font-weight:900;font-size:15px;line-height:1;transform:rotate(-3deg)}
+  .bar-nav{margin-left:auto;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
+  .bar-nav::-webkit-scrollbar{display:none}
+  .bar-nav a{font-size:13px;color:var(--ink-soft);text-decoration:none;padding:6px 10px;
+    border-radius:8px;white-space:nowrap;font-weight:500}
+  .bar-nav a:hover{color:var(--brand);background:var(--brand-soft)}
+  .tbtn{flex:none;border:1px solid var(--line-strong);background:var(--card);color:var(--ink);
+    width:34px;height:34px;border-radius:9px;cursor:pointer;font-size:15px;display:grid;place-items:center}
+  .tbtn:hover{border-color:var(--brand);color:var(--brand)}
+
+  /* ---------- Hero ---------- */
+  .hero{padding:48px 0 30px;text-align:center}
+  .eyebrow{font-size:13px;letter-spacing:.28em;color:var(--brand);font-weight:700;text-transform:uppercase}
+  .hero h1{font-family:var(--serif);font-weight:900;font-size:clamp(30px,7vw,52px);
+    line-height:1.12;margin:14px 0 6px;text-wrap:balance;letter-spacing:.01em}
+  .hero h1 em{font-style:normal;color:var(--brand);
+    background:linear-gradient(transparent 62%, var(--gold-soft) 62%)}
+  .hero .sub{font-size:15px;color:var(--ink-soft);margin:0 auto;max-width:34em}
+  .creed{margin:26px auto 0;max-width:40em;font-family:var(--serif);
+    font-size:clamp(17px,3.4vw,22px);font-weight:700;line-height:1.6;color:var(--ink);
+    border-left:4px solid var(--brand);background:var(--card);padding:18px 22px;
+    border-radius:0 var(--radius) var(--radius) 0;box-shadow:var(--shadow);text-align:left}
+  .creed span{color:var(--brand)}
+
+  /* ---------- section ---------- */
+  section{padding:34px 0;scroll-margin-top:70px}
+  .sec-head{display:flex;align-items:baseline;gap:12px;margin-bottom:18px;
+    border-bottom:2px solid var(--line-strong);padding-bottom:10px}
+  .sec-num{font-family:var(--serif);font-weight:900;color:var(--brand);font-size:15px;letter-spacing:.1em;flex:none}
+  .sec-head h2{font-family:var(--serif);font-weight:900;margin:0;font-size:clamp(21px,4.6vw,28px);letter-spacing:.01em}
+  .gps-note{color:var(--ink-soft);font-size:14.5px;margin:-4px 0 20px}
+  .gps-note b{color:var(--brand)}
+
+  /* ---------- 地理 GPS ---------- */
+  .gps-flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:22px}
+  .gps-flow .k{font-family:var(--serif);font-weight:700;background:var(--brand-soft);
+    color:var(--brand);padding:5px 12px;border-radius:999px;font-size:14.5px}
+  .gps-flow .arr{color:var(--line-strong);font-weight:700}
+  .gps{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+  .dyn{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:14px 15px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+  .dyn::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--brand);opacity:.85}
+  .dyn .n{font-family:var(--serif);font-weight:900;font-size:18px;display:flex;align-items:center;gap:8px}
+  .dyn .tag{font-size:11px;font-weight:700;color:var(--brand);background:var(--brand-soft);
+    padding:2px 7px;border-radius:6px;letter-spacing:.05em}
+  .dyn .d{font-size:13px;color:var(--ink-soft);margin-top:5px;line-height:1.55}
+  .dyn.on{outline:2px solid var(--gold)}
+
+  /* ---------- 講義結構 ---------- */
+  .parts{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+  .part{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:15px 16px;box-shadow:var(--shadow)}
+  .part .h{font-family:var(--serif);font-weight:700;font-size:16px;display:flex;gap:9px;align-items:center}
+  .part .h b{color:var(--brand);font-size:13px;font-family:var(--sans)}
+  .part p{margin:7px 0 0;font-size:13.5px;color:var(--ink-soft)}
+
+  /* ---------- 章節總覽 ---------- */
+  .chapters{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+  .chap{display:block;text-decoration:none;color:inherit;background:var(--card);
+    border:1px solid var(--line);border-radius:var(--radius);padding:16px 17px;box-shadow:var(--shadow);
+    transition:transform .15s, border-color .15s}
+  a.chap:hover{transform:translateY(-3px);border-color:var(--brand)}
+  .chap .cn{font-size:12px;font-weight:700;color:var(--brand);letter-spacing:.06em}
+  .chap h3{font-family:var(--serif);font-weight:900;font-size:18px;margin:5px 0 4px}
+  .chap p{margin:0;font-size:13px;color:var(--ink-soft);line-height:1.55}
+  .chap .st{margin-top:10px;font-size:11.5px;font-weight:700;padding:3px 9px;border-radius:999px;display:inline-block}
+  .chap .st.ready{background:var(--brand);color:#fff}
+  .chap .st.soon{background:var(--line);color:var(--ink-soft)}
+  .chap.disabled{opacity:.72}
+
+  /* ---------- 內文 ---------- */
+  .lead-chap{background:linear-gradient(135deg,var(--brand),color-mix(in srgb,var(--brand) 68%, #000));
+    color:#fff;border-radius:18px;padding:26px 24px;margin-bottom:26px;box-shadow:var(--shadow)}
+  .lead-chap .cn{font-size:13px;letter-spacing:.2em;opacity:.85;font-weight:700}
+  .lead-chap h2{font-family:var(--serif);font-weight:900;margin:8px 0 8px;
+    font-size:clamp(23px,5.2vw,32px);color:#fff;border:0;text-wrap:balance}
+  .body .lead-chap p{margin:0;font-size:15px;color:#fff;opacity:.94;max-width:36em}
+  .lead-chap strong{color:var(--gold);font-weight:700}
+
+  h3.block{font-family:var(--serif);font-weight:900;font-size:20px;margin:30px 0 12px;display:flex;align-items:center;gap:9px}
+
+  .talk{display:flex;gap:11px;margin:12px 0;align-items:flex-start}
+  .talk .who{flex:none;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;
+    font-size:22px;background:var(--gold-soft);border:1px solid var(--line)}
+  .talk .say{background:var(--card);border:1px solid var(--line);border-radius:4px 14px 14px 14px;
+    padding:10px 14px;box-shadow:var(--shadow)}
+  .talk .say b{color:var(--ink-soft);display:block;font-size:12px;margin-bottom:2px}
+
+  .box{border-radius:var(--radius);padding:16px 18px;margin:18px 0;box-shadow:var(--shadow);border:1px solid var(--line)}
+  .box .bh{font-family:var(--serif);font-weight:900;font-size:16px;display:flex;align-items:center;gap:8px;margin-bottom:6px}
+  .box p:first-of-type{margin-top:2px}
+  .box p:last-child{margin-bottom:0}
+
+  .box.mem{background:var(--gold-soft);border-color:var(--gold)}
+  .box.mem .bh{color:#8a6410}
+  :root[data-theme="dark"] .box.mem .bh,
+  :root:not([data-theme="light"]) .box.mem .bh{color:var(--gold)}
+  .box.mem .punch{font-family:var(--serif);font-weight:900;font-size:clamp(18px,4vw,22px);line-height:1.5;color:var(--ink)}
+
+  .box.teacher{background:var(--sky-soft);border-color:var(--sky)}
+  .box.teacher .bh{color:var(--sky)}
+
+  .box.trap{background:var(--warn-soft);border-color:var(--warn)}
+  .box.trap .bh{color:var(--warn-ink)}
+  .trap .no{text-decoration:line-through;color:var(--ink-soft)}
+  .trap .yes{color:var(--warn-ink);font-weight:700}
+
+  .box.detect{background:var(--sky-soft);border-color:var(--sky)}
+  .box.detect .bh{color:var(--sky)}
+
+  /* 因果流程圖 */
+  .flow{margin:18px 0;display:flex;flex-direction:column;align-items:center;gap:0}
+  .flow .node{background:var(--card);border:1.5px solid var(--line-strong);border-radius:10px;
+    padding:9px 16px;font-weight:700;text-align:center;box-shadow:var(--shadow);max-width:100%}
+  .flow .node.brand{background:var(--brand);color:#fff;border-color:var(--brand)}
+  .flow .node.sky{background:var(--sky-soft);border-color:var(--sky);color:var(--ink)}
+  .flow .down{color:var(--brand);font-size:20px;line-height:1;margin:4px 0;font-weight:900}
+  .flow .split{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+
+  /* 海陸位置：左右示意 */
+  .lr{display:flex;align-items:stretch;gap:0;margin:18px 0;flex-wrap:wrap}
+  .lr .cell{flex:1;min-width:120px;border:1.5px solid var(--line-strong);padding:14px;text-align:center;
+    box-shadow:var(--shadow);background:var(--card)}
+  .lr .cell:first-child{border-radius:12px 0 0 12px}
+  .lr .cell:last-child{border-radius:0 12px 12px 0}
+  .lr .cell.mid{background:var(--brand);color:#fff;border-color:var(--brand)}
+  .lr .cell .t{font-family:var(--serif);font-weight:900;font-size:17px}
+  .lr .cell .s{font-size:12.5px;margin-top:4px;color:var(--ink-soft)}
+  .lr .cell.mid .s{color:rgba(255,255,255,.9)}
+  @media(max-width:520px){
+    .lr .cell:first-child{border-radius:12px 12px 0 0}
+    .lr .cell:last-child{border-radius:0 0 12px 12px}
+    .lr .cell{min-width:100%}
+  }
+
+  .chips{display:flex;flex-wrap:wrap;gap:9px;margin:14px 0}
+  .chips .c{background:var(--card);border:1px solid var(--line-strong);border-radius:10px;
+    padding:9px 14px;font-weight:700;box-shadow:var(--shadow);text-align:center}
+  .chips .c b{display:block;font-size:12px;color:var(--brand);font-weight:700}
+
+  .upgrade{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;margin:16px 0}
+  .up{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--sky);
+    border-radius:10px;padding:13px 15px;box-shadow:var(--shadow)}
+  .up .t{font-weight:700;font-size:15px;display:flex;gap:8px;align-items:center}
+  .up .goal{font-size:13px;color:var(--ink-soft);margin-top:5px}
+  .up .goal b{color:var(--sky)}
+
+  /* 南北分界（秦嶺—淮河線）*/
+  .divide{border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;margin:18px 0;box-shadow:var(--shadow)}
+  .divide .side{padding:14px 16px}
+  .divide .side.north{background:var(--sky-soft)}
+  .divide .side.south{background:var(--warn-soft)}
+  .divide .side .lab{font-family:var(--serif);font-weight:900;font-size:16px;display:flex;align-items:center;gap:8px}
+  .divide .side.north .lab{color:var(--sky)}
+  .divide .side.south .lab{color:var(--warn-ink)}
+  .divide .side ul{margin:8px 0 0;padding-left:1.15em;font-size:14px;color:var(--ink)}
+  .divide .side li{margin:4px 0}
+  .divide .bar{background:var(--brand);color:#fff;text-align:center;font-family:var(--serif);
+    font-weight:900;padding:9px 8px;font-size:15px;letter-spacing:.06em}
+
+  /* 區域對照表 */
+  .tblwrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;margin:14px 0}
+  table.rev{border-collapse:collapse;width:100%;min-width:640px;font-size:13.5px}
+  table.rev th,table.rev td{border:1px solid var(--line);padding:8px 10px;vertical-align:top;text-align:left}
+  table.rev thead th{background:var(--brand);color:#fff;font-family:var(--serif);font-weight:700}
+  table.rev tbody th{background:var(--brand-soft);color:var(--brand);font-family:var(--serif);font-weight:900;white-space:nowrap}
+  table.rev tbody tr:nth-child(even) td{background:color-mix(in srgb,var(--paper) 55%,transparent)}
+  table.rev td{color:var(--ink)}
+
+  /* SVG 圖解 */
+  .figure{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:16px;margin:18px 0;box-shadow:var(--shadow)}
+  .figure svg{display:block;width:100%;height:auto;max-width:420px;margin:0 auto}
+  .figure figcaption{text-align:center;font-size:13px;color:var(--ink-soft);margin-top:10px}
+  .svg-ink{fill:var(--ink)}
+  .svg-soft{fill:var(--ink-soft)}
+  .svg-band-stroke{stroke:var(--line-strong);stroke-width:1.5;fill:none}
+  .svg-arrow{stroke:var(--brand);stroke-width:2.5;fill:none}
+  .svg-arrow-head{fill:var(--brand)}
+
+  /* 原創題 */
+  .quiz{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;margin:14px 0;box-shadow:var(--shadow)}
+  .quiz .qn{font-size:12px;font-weight:700;color:var(--brand);letter-spacing:.05em}
+  .quiz .qtype{font-size:11px;font-weight:700;color:var(--ink-soft);background:var(--paper);
+    border:1px solid var(--line);padding:2px 8px;border-radius:999px;margin-left:6px}
+  .quiz .stem{font-weight:500;margin:8px 0 12px;line-height:1.7}
+  .quiz .opts{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+  .quiz .opts li{border:1.5px solid var(--line);border-radius:10px;padding:9px 13px;cursor:pointer;transition:.12s;font-size:14.5px}
+  .quiz .opts li:hover{border-color:var(--brand)}
+  .quiz .opts li .lab{font-weight:700;color:var(--brand);margin-right:7px}
+  .quiz .opts li.correct{background:var(--brand-soft);border-color:var(--brand)}
+  .quiz .opts li.wrong{background:var(--warn-soft);border-color:var(--warn)}
+  .quiz .opts li.locked{cursor:default}
+  .quiz .exp{margin-top:12px;padding:12px 14px;background:var(--paper);border:1px dashed var(--line-strong);
+    border-radius:10px;font-size:14px;color:var(--ink-soft);line-height:1.7}
+  .quiz .exp b{color:var(--brand)}
+  .quiz .exp[hidden]{display:none}
+
+  footer{border-top:1px solid var(--line);margin-top:20px;padding:26px 0 40px;color:var(--ink-soft);font-size:13px;text-align:center}
+  footer .disc{max-width:42em;margin:0 auto 10px;line-height:1.7}
+  footer .disc b{color:var(--brand)}
+  hr.soft{border:0;border-top:1px dashed var(--line-strong);margin:30px 0}
+  @media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+
+<header class="bar">
+  <div class="bar-in">
+    <div class="brand"><span class="seal">地</span>不用死背的中國地理</div>
+    <nav class="bar-nav">
+      <a href="#gps">地理 GPS</a>
+      <a href="#how">怎麼用</a>
+      <a href="#toc">章節</a>
+      <a href="#ch1">第一章</a>
+      <a href="#ch2">第二章</a>
+      <a href="#ch3">第三章</a>
+      <a href="#ch4">第四章</a>
+      <a href="#ch5">第五章</a>
+      <a href="#ch6">第六章</a>
+      <a href="#ch7">第七章</a>
+    </nav>
+    <button class="tbtn" id="theme" title="切換深淺色" aria-label="切換深淺色">◐</button>
+  </div>
+</header>
+
+<div class="wrap body">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="eyebrow">八年級地理 · 名師記憶講義</div>
+    <h1>地理不是背地名<br>是看<em>環境</em>怎麼決定生活</h1>
+    <p class="sub">中國地理不是一堆地名和數字。看懂「環境怎麼影響人」，答案自己會浮出來。</p>
+    <div class="creed">
+      地理不是背地名，是看<span>環境</span>怎麼決定<span>人怎麼生活</span>。
+    </div>
+  </div>
+
+  <!-- 地理 GPS -->
+  <section id="gps">
+    <div class="sec-head"><span class="sec-num">GPS</span><h2>地理 GPS：一條因果鏈</h2></div>
+    <p class="gps-note">中國地理最強的記法，就是這條「一環扣一環」的因果鏈。先記這條，之後每一課都掛得上去。<b>點卡片看重點。</b></p>
+    <div class="gps-flow">
+      <span class="k">位置</span><span class="arr">→</span>
+      <span class="k">地形</span><span class="arr">→</span>
+      <span class="k">氣候</span><span class="arr">→</span>
+      <span class="k">水文</span><span class="arr">→</span>
+      <span class="k">產業</span><span class="arr">→</span>
+      <span class="k">人口</span><span class="arr">→</span>
+      <span class="k">區域</span>
+    </div>
+    <div class="gps" id="gpsgrid"></div>
+  </section>
+
+  <!-- 怎麼用 -->
+  <section id="how">
+    <div class="sec-head"><span class="sec-num">MAP</span><h2>這套講義怎麼用</h2></div>
+    <p>每一課都用同一套固定結構。你不是在背地圖，是在看老師把「環境如何影響人」的故事講給你聽——順手幫你圈好會考會挖的洞。</p>
+    <div class="parts">
+      <div class="part"><div class="h"><b>01</b>🧵 地理主線</div><p>一句因果線，先知道「環境怎麼影響人」。</p></div>
+      <div class="part"><div class="h"><b>02</b>🎬 圖解課</div><p>重要概念用故事＋圖講，不是抄定義。</p></div>
+      <div class="part"><div class="h"><b>03</b>🗺 一圖秒懂</div><p>地圖、剖面圖、因果圖、示意圖。</p></div>
+      <div class="part"><div class="h"><b>04</b>🧠 記憶梗</div><p>每章 5～10 個超短口訣。</p></div>
+      <div class="part"><div class="h"><b>05</b>⚠️ 會考陷阱</div><p>看到什麼關鍵字，別被騙。</p></div>
+      <div class="part"><div class="h"><b>06</b>🔥 素養題</div><p>原創情境、圖表、判讀題。</p></div>
+      <div class="part"><div class="h"><b>07</b>📝 複習考</div><p>每 2～3 章一份段考型試卷。</p></div>
+    </div>
+  </section>
+
+  <!-- 章節總覽 -->
+  <section id="toc">
+    <div class="sec-head"><span class="sec-num">TOC</span><h2>七大主題章</h2></div>
+    <p class="gps-note">章節可依學生使用的翰林／康軒／南一版本再微調，主線相同。</p>
+    <div class="chapters">
+      <a class="chap" href="#ch1">
+        <div class="cn">第一章</div><h3>位置與範圍：什麼都有的大塊頭</h3>
+        <p>又大又跨得廣，所以中國什麼氣候地形都有。</p>
+        <span class="st ready">✓ 完整成品</span>
+      </a>
+      <a class="chap" href="#ch2">
+        <div class="cn">第二章</div><h3>地形：像下樓梯的三大階梯</h3>
+        <p>地勢西高東低，決定了河流往哪流。</p>
+        <span class="st ready">✓ 完整成品</span>
+      </a>
+      <a class="chap" href="#ch3">
+        <div class="cn">第三章</div><h3>氣候：季風主宰乾與濕</h3>
+        <p>夏季風帶雨、冬季風乾冷；東南濕、西北乾。</p>
+        <span class="st ready">✓ 完整成品</span>
+      </a>
+      <a class="chap" href="#ch4">
+        <div class="cn">第四章</div><h3>水文：大河為什麼都向東流</h3>
+        <p>長江、黃河兩條命脈，順著地勢入海。</p>
+        <span class="st ready">✓ 完整成品</span>
+      </a>
+      <a class="chap" href="#ch5">
+        <div class="cn">第五章</div><h3>產業：南稻北麥的經濟版圖</h3>
+        <p>氣候決定種什麼、養什麼、怎麼過活。</p>
+        <span class="st ready">✓ 完整成品</span>
+      </a>
+      <a class="chap" href="#ch6">
+        <div class="cn">第六章</div><h3>人口與都市：東多西少</h3>
+        <p>好住的地方人就多，一條線切開疏密。</p>
+        <span class="st ready">✓ 完整成品</span>
+      </a>
+      <a class="chap" href="#ch7">
+        <div class="cn">第七章</div><h3>區域地理：把中國切塊來記</h3>
+        <p>北、南、西各有一套環境與生活。</p>
+        <span class="st ready">✓ 完整成品</span>
+      </a>
+      <div class="chap disabled">
+        <div class="cn">總複習</div><h3>中國地理一張表複習完</h3>
+        <p>最後把整條因果鏈濃縮成一張速查表。</p>
+        <span class="st soon">製作中</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 第一章 ================= -->
+  <section id="ch1">
+    <div class="lead-chap">
+      <div class="cn">第一章</div>
+      <h2>位置與範圍：一個「什麼都有」的大塊頭</h2>
+      <p>為什麼中國又有沙漠、又有雨林、又有雪山？答案很簡單：<strong>因為它夠大、跨得夠廣</strong>。這一章是整條因果鏈的起點——先搞懂「它站在哪、有多大」，後面的地形氣候才有道理。</p>
+    </div>
+
+    <!-- 故事開場 -->
+    <h3 class="block">🎬 故事開場：用一個字形容中國</h3>
+    <p>如果只能用一個字形容中國，那就是——<strong>大</strong>。大到什麼程度？大到它「什麼都有」：北邊在飄雪，南邊在穿短袖；西邊是沙漠高原，東邊是海岸平原。</p>
+    <div class="talk"><div class="who">🧭</div><div class="say"><b>老師</b>「別急著背地名。先問一句：它為什麼可以什麼都有？因為它站的位置好、又夠大。」</div></div>
+
+    <div class="box mem">
+      <div class="bh">🧠 這章一句話</div>
+      <p class="punch">中國是個「海陸兼備、又大又廣」的大塊頭。</p>
+      <p>位置（站哪）＋ 範圍（多大）＝ 決定了後面所有的地形、氣候、生活。這是因果鏈的第一環。</p>
+    </div>
+
+    <!-- 重點一 位置 海陸兼備 -->
+    <h3 class="block">🌏 重點一：位置——海陸兼備</h3>
+    <p>中國位於<strong>亞洲東部、太平洋西岸</strong>。一邊靠著世界最大的大陸（亞洲），一邊靠著世界最大的海洋（太平洋）。這叫做<strong>海陸兼備</strong>，而且它直接造成東西部的巨大差異：</p>
+    <div class="lr">
+      <div class="cell"><div class="t">🏜 西部內陸</div><div class="s">離海遠<br>乾燥、雨少</div></div>
+      <div class="cell mid"><div class="t">🇨🇳 中國</div><div class="s">海陸兼備<br>東西差異大</div></div>
+      <div class="cell"><div class="t">🌊 東部沿海</div><div class="s">臨太平洋<br>濕潤、雨多</div></div>
+    </div>
+    <div class="box mem">
+      <div class="bh">🧠 記憶點</div>
+      <p class="punch">越靠海越濕，越內陸越乾。</p>
+      <p>這一句之後在「氣候」「產業」「人口」都會一直用到——東南濕潤好住、西北乾燥難住，全從這裡開始。</p>
+    </div>
+
+    <!-- 重點二 範圍 跨緯度 -->
+    <h3 class="block">📏 重點二：範圍很廣——所以「什麼氣候都有」</h3>
+    <p>中國<strong>南北跨的緯度非常廣</strong>：最南接近熱帶、最北到寒冷的高緯度。緯度差這麼多，氣候當然從熱到冷一應俱全：</p>
+    <figure class="figure">
+      <svg viewBox="0 0 340 250" role="img" aria-label="中國由南到北的氣候帶示意圖">
+        <defs>
+          <linearGradient id="latgrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#bcd4ec"/>
+            <stop offset="35%" stop-color="#cfe0d8"/>
+            <stop offset="65%" stop-color="#f3e6c2"/>
+            <stop offset="100%" stop-color="#f2c19a"/>
+          </linearGradient>
+        </defs>
+        <!-- 緯度色帶 -->
+        <rect x="34" y="22" width="86" height="206" rx="10" fill="url(#latgrad)"/>
+        <rect x="34" y="22" width="86" height="206" rx="10" class="svg-band-stroke"/>
+        <!-- 分隔線 -->
+        <line x1="34" y1="73" x2="120" y2="73" class="svg-band-stroke"/>
+        <line x1="34" y1="125" x2="120" y2="125" class="svg-band-stroke"/>
+        <line x1="34" y1="177" x2="120" y2="177" class="svg-band-stroke"/>
+        <!-- 圖示 -->
+        <text x="77" y="42" text-anchor="middle" font-size="20">❄️</text>
+        <text x="77" y="216" text-anchor="middle" font-size="20">☀️</text>
+        <!-- 右側標籤 -->
+        <text x="134" y="52" font-size="13" class="svg-ink" font-weight="700">北：緯度高</text>
+        <text x="134" y="69" font-size="12" class="svg-soft">寒冷（寒溫帶）</text>
+        <text x="134" y="112" font-size="13" class="svg-ink" font-weight="700">中段</text>
+        <text x="134" y="129" font-size="12" class="svg-soft">溫帶</text>
+        <text x="134" y="164" font-size="13" class="svg-ink" font-weight="700">偏南</text>
+        <text x="134" y="181" font-size="12" class="svg-soft">亞熱帶</text>
+        <text x="134" y="212" font-size="13" class="svg-ink" font-weight="700">南：緯度低</text>
+        <text x="134" y="229" font-size="12" class="svg-soft">炎熱（熱帶）</text>
+        <!-- 左側箭頭 -->
+        <line x1="20" y1="218" x2="20" y2="34" class="svg-arrow"/>
+        <polygon points="20,24 15,36 25,36" class="svg-arrow-head"/>
+        <text x="14" y="243" font-size="11" class="svg-soft">往北越冷</text>
+      </svg>
+      <figcaption>南北跨緯度廣 → 由南到北氣候「從熱到冷」什麼都有</figcaption>
+    </figure>
+
+    <p>那<strong>東西跨的經度</strong>呢？也非常廣，理論上東西兩端會有明顯時差。但這裡有個常考的「特別規定」——</p>
+    <div class="box trap">
+      <div class="bh">⚠️ 會考陷阱：跨經度廣，卻「全國用同一個時間」</div>
+      <p>中國東西跨很多經度，照理有好幾個時區，<span class="yes">但行政上全國統一使用「北京時間」</span>。</p>
+      <p style="margin-top:8px">👉 所以西部（如新疆）明明天還很黑，時鐘卻已是北京的上班時間。題目愛考這個「跨經度廣 ↔ 統一北京時間」的反差，別答成「有好幾個官方時區」。</p>
+    </div>
+
+    <!-- 重點三 疆域 行政區 民族 人口 -->
+    <h3 class="block">🗺 重點三：面積、行政區、人與民族</h3>
+    <div class="upgrade">
+      <div class="up"><div class="t">📐 面積</div><div class="goal">約 960 萬平方公里，<b>世界名列前茅</b>（約第 3～4 大）。</div></div>
+      <div class="up"><div class="t">🧩 行政區</div><div class="goal">分為<b>省、自治區、直轄市、特別行政區</b>等省級行政區。</div></div>
+      <div class="up"><div class="t">👥 人口</div><div class="goal">人口<b>極多</b>（長年世界最多，近年被印度超越、居第二）。</div></div>
+      <div class="up"><div class="t">🪶 民族</div><div class="goal">以<b>漢族</b>為主，加上眾多少數民族，多分布在<b>邊疆／西部</b>。</div></div>
+    </div>
+
+    <div class="box teacher">
+      <div class="bh">👨‍🏫 老師講解</div>
+      <p>兩個很容易被學生搞混、但其實很好記的點：</p>
+      <p>① <strong>「面積排名」和「人口排名」是兩回事</strong>——面積世界前幾大，人口也世界前幾大，但兩個數字別互相張冠李戴。</p>
+      <p>② <strong>人口的「時事更新」</strong>：舊課本常寫「中國人口世界第一」，但近年（2023 起）已被印度超越，變成世界第二。素養題若結合時事，要看它問的是哪個時間點。中國仍然是不折不扣的人口大國。</p>
+    </div>
+
+    <!-- 考題偵測器 -->
+    <h3 class="block">🔥 考題偵測器：看到這種題，你要想到什麼</h3>
+    <div class="box detect">
+      <div class="bh">🔎 關鍵字 → 反射動作</div>
+      <p>📌 題目說「位於亞洲東部、太平洋西岸，東臨海、西為內陸」<br>→ 想到 <strong>海陸兼備 → 東濕西乾</strong>。</p>
+      <p>📌 題目說「南北跨緯度廣，氣候類型多樣」<br>→ 想到 <strong>南熱北冷、什麼氣候都有</strong>。</p>
+      <p>📌 題目說「東西跨經度廣，卻使用單一標準時間」<br>→ 想到 <strong>北京時間</strong>（不是好幾個時區）。</p>
+      <p>📌 題目說「以漢族為主，少數民族多居邊疆」<br>→ 想到 <strong>民族分布</strong>。</p>
+    </div>
+
+    <!-- 原創題 -->
+    <h3 class="block">📝 原創練習題（點選項作答）</h3>
+    <p class="gps-note">全部原創，練的是「看到新題也會做」，不是背題庫。作答後會出現解析。</p>
+    <div id="quizzes1"></div>
+
+  </section>
+
+  <!-- ================= 第二章 ================= -->
+  <section id="ch2">
+    <div class="lead-chap">
+      <div class="cn">第二章</div>
+      <h2>地形：像下樓梯的三大階梯</h2>
+      <p>上一章說中國「又大又廣」，這章要講它「長什麼樣」。中國地勢<strong>西邊高、東邊低</strong>，而且是一階一階降下來的三大階梯——這個形狀，直接決定了河流往哪流、哪裡有水電。</p>
+    </div>
+
+    <!-- 故事開場 -->
+    <h3 class="block">🎬 故事開場：把中國想成一道下坡樓梯</h3>
+    <p>想像你站在中國最西邊，一路往東走到海邊。你會發現地面像下樓梯——<strong>從最高的一階，走到中間一階，再走到最低的一階，最後踏進海裡</strong>。這就是「地勢西高東低、呈三級階梯」。</p>
+    <figure class="figure">
+      <svg viewBox="0 0 460 250" role="img" aria-label="中國地勢西高東低三大階梯剖面示意圖">
+        <text x="230" y="16" text-anchor="middle" font-size="12" class="svg-soft">地勢西高東低（剖面示意）</text>
+        <!-- 山峰（第一階梯） -->
+        <polygon points="55,70 68,48 81,70" class="svg-ink" opacity="0.55"/>
+        <polygon points="95,70 110,44 125,70" class="svg-ink" opacity="0.55"/>
+        <!-- 陸地階梯 -->
+        <polygon points="20,235 20,70 160,70 160,135 300,135 300,190 410,190 410,235"
+          fill="var(--brand-soft)" stroke="var(--brand)" stroke-width="2"/>
+        <!-- 海 -->
+        <rect x="410" y="190" width="42" height="45" fill="var(--sky-soft)" stroke="var(--sky)" stroke-width="1.5"/>
+        <text x="431" y="216" text-anchor="middle" font-size="12" class="svg-soft">海</text>
+        <!-- 河流箭頭：順階梯由西往東 -->
+        <polyline points="72,62 152,62 152,127 292,127 292,182 400,182 432,203"
+          fill="none" stroke="var(--sky)" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+        <polygon points="432,203 421,199 425,211" fill="var(--sky)"/>
+        <!-- 階梯文字 -->
+        <text x="90" y="102" text-anchor="middle" font-size="13" class="svg-ink" font-weight="700">第一階梯</text>
+        <text x="90" y="121" text-anchor="middle" font-size="12" class="svg-soft">青藏高原</text>
+        <text x="90" y="138" text-anchor="middle" font-size="12" class="svg-soft">（最高）</text>
+        <text x="230" y="162" text-anchor="middle" font-size="13" class="svg-ink" font-weight="700">第二階梯</text>
+        <text x="230" y="181" text-anchor="middle" font-size="12" class="svg-soft">高原·盆地</text>
+        <text x="355" y="211" text-anchor="middle" font-size="13" class="svg-ink" font-weight="700">第三階梯</text>
+        <text x="355" y="228" text-anchor="middle" font-size="11" class="svg-soft">平原·丘陵</text>
+        <!-- 左右標示 -->
+        <text x="20" y="60" text-anchor="middle" font-size="12" class="svg-ink" font-weight="700">西·高</text>
+        <text x="430" y="182" text-anchor="middle" font-size="12" class="svg-ink" font-weight="700">東·低</text>
+      </svg>
+      <figcaption>藍色箭頭＝河流：順著階梯由西向東流入海</figcaption>
+    </figure>
+
+    <div class="box mem">
+      <div class="bh">🧠 這章一句話</div>
+      <p class="punch">西高東低，三階下樓梯。</p>
+      <p>只要記住這個「下樓梯」的形狀，這一章的重點就抓住一半了。</p>
+    </div>
+
+    <!-- 三階梯住了誰 -->
+    <h3 class="block">🪜 三大階梯，各住了誰</h3>
+    <p>由西（高）往東（低），三階分別以不同地形為主：</p>
+    <div class="upgrade">
+      <div class="up" style="border-left-color:var(--brand)"><div class="t">1️⃣ 第一階梯（最高）</div><div class="goal"><b>青藏高原</b>，有「世界屋脊」之稱，平均海拔最高。</div></div>
+      <div class="up" style="border-left-color:var(--brand)"><div class="t">2️⃣ 第二階梯（中間）</div><div class="goal">以<b>高原、盆地</b>為主（如內蒙古、黃土、雲貴高原；塔里木、四川盆地）。</div></div>
+      <div class="up" style="border-left-color:var(--brand)"><div class="t">3️⃣ 第三階梯（最低）</div><div class="goal">以<b>平原、丘陵</b>為主（東北、華北、長江中下游平原），臨海。</div></div>
+    </div>
+    <div class="box teacher">
+      <div class="bh">👨‍🏫 老師講解</div>
+      <p>階梯和階梯之間是用<strong>山脈</strong>當界線的（例如一、二階之間有崑崙山等；二、三階之間有大興安嶺、太行山等）。名字很多不用硬背，重點是理解：<strong>山脈就是樓梯的「階差」</strong>。</p>
+      <p>還有一個常被忽略的重點：<strong>中國地形以「山地、高原」為主，平原其實不多</strong>，而且平原集中在東部第三階梯。這點很愛考（見下方陷阱）。</p>
+    </div>
+
+    <!-- 三階梯的影響：因果 -->
+    <h3 class="block">⚡ 重點：這個「形狀」造成三件大事</h3>
+    <p>三大階梯不是拿來背的地形而已，它是後面好幾章的<strong>因</strong>：</p>
+    <div class="flow">
+      <div class="node brand">地勢西高東低（三階梯）</div>
+      <div class="down">↓</div>
+      <div class="split">
+        <div class="node sky">大河由西向東流</div>
+        <div class="node sky">階梯交界落差大 → 水力豐富</div>
+        <div class="node sky">東部低又近海 → 濕潤</div>
+      </div>
+    </div>
+    <div class="box mem">
+      <div class="bh">🧠 因果口訣</div>
+      <p class="punch">水往低處流——西邊高，所以大河都往東邊的海跑。</p>
+      <p>河流為什麼幾乎都由西向東流？不是巧合，是<strong>地勢逼的</strong>。這一句下一章「水文」會直接用到。</p>
+    </div>
+
+    <!-- 會考陷阱 -->
+    <div class="box trap">
+      <div class="bh">⚠️ 會考兩大陷阱</div>
+      <p>① <strong>地形主體</strong>：中國以<span class="yes">山地、高原為主</span>，<span class="no">不是以平原為主</span>。平原只集中在東部第三階梯。</p>
+      <p>② <strong>河流流向</strong>：大河由西向東流，是<span class="yes">「西高東低」造成的</span>，不要答成「剛好而已」。</p>
+    </div>
+
+    <!-- 考題偵測器 -->
+    <h3 class="block">🔥 考題偵測器：看到這種題，你要想到什麼</h3>
+    <div class="box detect">
+      <div class="bh">🔎 關鍵字 → 反射動作</div>
+      <p>📌 題目說「地勢呈三級階梯、西高東低」<br>→ 想到 <strong>三大階梯</strong>。</p>
+      <p>📌 題目說「海拔最高、世界屋脊」<br>→ 想到 <strong>青藏高原（第一階梯）</strong>。</p>
+      <p>📌 題目說「大河多由西向東流」<br>→ 想到 <strong>因為西高東低</strong>。</p>
+      <p>📌 題目說「某處落差大、水力（水能）資源豐富」<br>→ 想到 <strong>階梯交界處</strong>。</p>
+      <p>📌 題目說「東北／華北／長江中下游平原」<br>→ 想到 <strong>第三階梯（最低、臨海）</strong>。</p>
+    </div>
+
+    <!-- 原創題 -->
+    <h3 class="block">📝 原創練習題（點選項作答）</h3>
+    <p class="gps-note">全部原創，練的是「看到新題也會做」，不是背題庫。作答後會出現解析。</p>
+    <div id="quizzes2"></div>
+
+  </section>
+
+  <!-- ================= 第三章 ================= -->
+  <section id="ch3">
+    <div class="lead-chap">
+      <div class="cn">第三章</div>
+      <h2>氣候：季風主宰乾與濕</h2>
+      <p>上一章的地形是骨架，這一章的<strong>氣候</strong>是靈魂。中國東半部是典型的季風氣候——<strong>夏天海風送雨來、冬天陸風把雨關掉</strong>。搞懂季風，就搞懂了中國哪裡濕、哪裡乾、種什麼。</p>
+    </div>
+
+    <!-- 故事開場 -->
+    <h3 class="block">🎬 故事開場：季風是個「送貨員」</h3>
+    <p>把季風想成一個按季節換方向的送貨員。<strong>夏天</strong>他從海上出發，把「水氣」一路送進內陸；<strong>冬天</strong>他反方向從內陸往海邊走，兩手空空、還帶著寒氣。</p>
+    <figure class="figure">
+      <svg viewBox="0 0 460 220" role="img" aria-label="夏季風與冬季風方向示意圖">
+        <!-- 陸地 -->
+        <rect x="26" y="42" width="150" height="140" rx="8" fill="var(--brand-soft)" stroke="var(--brand)" stroke-width="2"/>
+        <text x="101" y="108" text-anchor="middle" font-size="14" class="svg-ink" font-weight="700">陸地</text>
+        <text x="101" y="128" text-anchor="middle" font-size="12" class="svg-soft">亞洲內陸</text>
+        <!-- 海洋 -->
+        <rect x="300" y="42" width="150" height="140" rx="8" fill="var(--sky-soft)" stroke="var(--sky)" stroke-width="2"/>
+        <text x="375" y="108" text-anchor="middle" font-size="14" class="svg-ink" font-weight="700">海洋</text>
+        <text x="375" y="128" text-anchor="middle" font-size="12" class="svg-soft">太平洋</text>
+        <!-- 夏季風：海→陸 -->
+        <text x="238" y="58" text-anchor="middle" font-size="12" class="svg-ink" font-weight="700">☀️ 夏季風</text>
+        <line x1="298" y1="72" x2="182" y2="72" stroke="var(--sky)" stroke-width="3.5" stroke-linecap="round"/>
+        <polygon points="176,72 189,66 189,78" fill="var(--sky)"/>
+        <text x="240" y="90" text-anchor="middle" font-size="11" class="svg-soft">海→陸，帶水氣</text>
+        <text x="150" y="62" font-size="13">💧💧</text>
+        <!-- 冬季風：陸→海 -->
+        <text x="238" y="150" text-anchor="middle" font-size="12" class="svg-ink" font-weight="700">❄️ 冬季風</text>
+        <line x1="180" y1="164" x2="296" y2="164" stroke="var(--ink-soft)" stroke-width="3.5" stroke-linecap="round"/>
+        <polygon points="302,164 289,158 289,170" fill="var(--ink-soft)"/>
+        <text x="238" y="182" text-anchor="middle" font-size="11" class="svg-soft">陸→海，乾又冷</text>
+      </svg>
+      <figcaption>夏季風從海上帶雨進來；冬季風從內陸吹出去、乾冷少雨</figcaption>
+    </figure>
+
+    <div class="box mem">
+      <div class="bh">🧠 季風一句話</div>
+      <p class="punch">夏季風＝海來的＝帶雨；冬季風＝陸來的＝乾冷。</p>
+      <p>所以中國東部「夏季高溫又多雨」，叫做<strong>雨熱同期</strong>（最熱的時候剛好也最多雨）——這對農作物超重要，是常考詞。</p>
+    </div>
+
+    <!-- 雨量分布 -->
+    <h3 class="block">🌧 重點一：雨量「由東南向西北」遞減</h3>
+    <p>夏季風從東南方的海上來，越往內陸走、水氣掉得越多。所以降雨多寡就跟「離海遠近」綁在一起（接第一章的海陸兼備）：</p>
+    <div class="flow">
+      <div class="node sky">東南沿海 · 離海近 · 雨多</div>
+      <div class="down">→</div>
+      <div class="node">往內陸遞減</div>
+      <div class="down">→</div>
+      <div class="node brand">西北內陸 · 離海遠 · 雨少（乾旱）</div>
+    </div>
+    <div class="box mem">
+      <div class="bh">🧠 記憶點</div>
+      <p class="punch">雨量：東南多、西北少（由東南向西北遞減）。</p>
+    </div>
+
+    <!-- 秦嶺淮河線 大魔王 -->
+    <h3 class="block">👑 重點二：秦嶺—淮河線（地理最大魔王）</h3>
+    <p>中國有一條「什麼都能分」的神奇界線——<strong>秦嶺—淮河線</strong>。它幾乎把中國切成「北方」和「南方」兩個世界，而且好幾條重要界線剛好都落在這附近：</p>
+    <div class="divide">
+      <div class="side north">
+        <div class="lab">🧊 北方（秦嶺—淮河以北）</div>
+        <ul>
+          <li>1 月均溫 <b>低於 0°C</b>，河流冬季<b>會結冰</b></li>
+          <li>年雨量 <b>少於 800mm</b>（較乾）</li>
+          <li>以<b>旱田</b>為主，種<b>小麥</b>（北麥）</li>
+          <li>暖溫帶、半濕潤區</li>
+        </ul>
+      </div>
+      <div class="bar">⟺ 秦嶺 — 淮河 線 ⟺</div>
+      <div class="side south">
+        <div class="lab">🌾 南方（秦嶺—淮河以南）</div>
+        <ul>
+          <li>1 月均溫 <b>高於 0°C</b>，河流冬季<b>不結冰</b></li>
+          <li>年雨量 <b>多於 800mm</b>（較濕）</li>
+          <li>以<b>水田</b>為主，種<b>稻米</b>（南稻）</li>
+          <li>亞熱帶、濕潤區</li>
+        </ul>
+      </div>
+    </div>
+    <div class="box mem">
+      <div class="bh">🧠 一條線記五件事</div>
+      <p class="punch">0°C ｜ 800mm ｜ 稻⇄麥 ｜ 水田⇄旱田 ｜ 結冰⇄不結冰</p>
+      <p>看到「秦嶺淮河」，這五組對照要能立刻背出來。這是整個中國地理最高頻的考點。</p>
+    </div>
+
+    <div class="box teacher">
+      <div class="bh">👨‍🏫 老師講解</div>
+      <p>為什麼這條線考不完？因為它不是「一條線」，而是<strong>好幾條界線剛好疊在一起</strong>：氣溫線（0°C）、雨量線（800mm）、乾濕分界、農業分界……全都在這附近。</p>
+      <p>所以它同時是「氣候界線」也是「人文（農業）界線」——這正是素養題最愛的「自然環境如何影響人的生活」。記這一條，等於一次拿下好幾個考點。</p>
+    </div>
+
+    <!-- 三大氣候區 / 自然區 -->
+    <h3 class="block">🗺 重點三：三大自然區（乾濕冷熱決定分區）</h3>
+    <p>把整個中國依「季風到不到得了、海拔高不高」分成三塊：</p>
+    <div class="upgrade">
+      <div class="up" style="border-left-color:var(--sky)"><div class="t">🌊 東部季風區</div><div class="goal">季風到得了，<b>濕潤</b>；由南到北為熱帶／亞熱帶／溫帶季風氣候。</div></div>
+      <div class="up" style="border-left-color:var(--warn)"><div class="t">🏜 西北乾燥區</div><div class="goal">季風吹不到、離海遠，<b>乾燥少雨</b>，多沙漠草原。</div></div>
+      <div class="up" style="border-left-color:var(--brand)"><div class="t">🏔 青藏高寒區</div><div class="goal">海拔太高，<b>高寒</b>；氣溫低、空氣稀薄。</div></div>
+    </div>
+
+    <!-- 會考陷阱 -->
+    <div class="box trap">
+      <div class="bh">⚠️ 會考三大陷阱</div>
+      <p>① <strong>季風方向別記反</strong>：<span class="yes">夏季風海→陸帶雨、冬季風陸→海乾冷</span>。</p>
+      <p>② <strong>雨量遞減方向</strong>：是「<span class="yes">由東南向西北</span>」遞減，不是單純「由南向北」。</p>
+      <p>③ <strong>秦嶺淮河</strong>：對應 <span class="yes">0°C＋800mm＋稻麥＋水田旱田＋結冰</span>，別只記一半。</p>
+    </div>
+
+    <!-- 考題偵測器 -->
+    <h3 class="block">🔥 考題偵測器：看到這種題，你要想到什麼</h3>
+    <div class="box detect">
+      <div class="bh">🔎 關鍵字 → 反射動作</div>
+      <p>📌 題目說「夏季高溫又多雨（雨熱同期）」<br>→ 想到 <strong>夏季風帶來水氣（季風氣候）</strong>。</p>
+      <p>📌 題目說「降水由東南向西北遞減」<br>→ 想到 <strong>離海越遠雨越少</strong>。</p>
+      <p>📌 題目說「1 月 0°C 等溫線／年雨量 800mm／稻麥分界」<br>→ 想到 <strong>秦嶺—淮河線</strong>。</p>
+      <p>📌 題目說「離海遠、季風到不了、乾燥少雨」<br>→ 想到 <strong>西北乾燥區</strong>。</p>
+    </div>
+
+    <!-- 原創題 -->
+    <h3 class="block">📝 原創練習題（點選項作答）</h3>
+    <p class="gps-note">全部原創，練的是「看到新題也會做」，不是背題庫。作答後會出現解析。</p>
+    <div id="quizzes3"></div>
+
+  </section>
+
+  <!-- ================= 第四章 ================= -->
+  <section id="ch4">
+    <div class="lead-chap">
+      <div class="cn">第四章</div>
+      <h2>水文：大河為什麼都向東流</h2>
+      <p>這章是前兩章的「合體」：<strong>地勢（西高東低）決定河流往東流，氣候（季風雨量）決定河流有多少水</strong>。再認識中國的兩條命脈——長江與黃河，各有各的個性。</p>
+    </div>
+
+    <!-- 故事開場 -->
+    <h3 class="block">🎬 故事開場：兩條大河，兩種個性</h3>
+    <p>中國有兩條最重要的大河，把它們想成兩個角色：<strong>長江是大哥</strong>——最長、水最多、能行船能發電；<strong>黃河是母親</strong>——養育了中華文明，但脾氣不太好、滿身泥沙、動不動就氾濫。</p>
+    <div class="talk"><div class="who">🌊</div><div class="say"><b>老師</b>「別死記數字。先記個性：長江＝『最大最長的模範生』，黃河＝『偉大但麻煩的母親』。」</div></div>
+
+    <!-- 重點一 外流內流 -->
+    <h3 class="block">🧭 重點一：往哪流？外流河 vs 內流河</h3>
+    <p>接第二章：地勢西高東低，所以東部的大河大多<strong>由西向東流入海洋</strong>。但西北太乾，有些河根本流不到海：</p>
+    <div class="upgrade">
+      <div class="up" style="border-left-color:var(--sky)"><div class="t">🌊 外流河（東部）</div><div class="goal">最後<b>流入海洋</b>。分布在東部季風區、雨量足。如長江、黃河、珠江。</div></div>
+      <div class="up" style="border-left-color:var(--warn)"><div class="t">🏜 內流河（西北）</div><div class="goal">流不到海，最後<b>消失在內陸／注入內陸湖</b>。如<b>塔里木河</b>（中國最長內流河）。</div></div>
+    </div>
+    <div class="box mem">
+      <div class="bh">🧠 記憶點</div>
+      <p class="punch">東部濕、河流入海（外流）；西北乾、河流消失在內陸（內流）。</p>
+    </div>
+
+    <!-- 重點二 雙雄 -->
+    <h3 class="block">🏞 重點二：長江 vs 黃河，河川雙雄</h3>
+    <div class="divide">
+      <div class="side north">
+        <div class="lab">🐉 長江（大哥）</div>
+        <ul>
+          <li>中國<b>第一長河</b>、水量最大</li>
+          <li>航運價值高，有「<b>黃金水道</b>」之稱</li>
+          <li>有<b>三峽</b>：水力發電、防洪</li>
+          <li>注入<b>東海</b></li>
+        </ul>
+      </div>
+      <div class="bar">兩條都發源於青藏高原、由西向東流</div>
+      <div class="side south">
+        <div class="lab">🌊 黃河（母親河）</div>
+        <ul>
+          <li>中國<b>第二長河</b>，中華文明發源</li>
+          <li><b>含沙量世界最大</b>（流經黃土高原）</li>
+          <li>下游成「<b>地上河</b>」，容易氾濫</li>
+          <li>注入<b>渤海</b></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 重點三 地上河 SVG -->
+    <h3 class="block">⚠️ 重點三：黃河的脾氣——「地上河」是怎麼來的</h3>
+    <p>黃河流經<strong>黃土高原</strong>，一路帶走大量泥沙（所以水是黃的）。到了平坦的下游流速變慢，泥沙沉積、河床越墊越高，最後<strong>河床竟然比兩岸地面還高</strong>，只能一直加高堤防擋著——這就是「地上河（懸河）」：</p>
+    <figure class="figure">
+      <svg viewBox="0 0 460 210" role="img" aria-label="黃河下游地上河剖面示意圖：河床高於兩岸地面">
+        <!-- 兩岸平地 -->
+        <rect x="20" y="150" width="420" height="46" fill="var(--brand-soft)" stroke="var(--brand)" stroke-width="1.5"/>
+        <!-- 地面參考虛線 -->
+        <line x1="20" y1="150" x2="440" y2="150" stroke="var(--ink-soft)" stroke-width="1.5" stroke-dasharray="5 4"/>
+        <!-- 左堤防 -->
+        <polygon points="150,150 185,96 215,150" fill="var(--warn-soft)" stroke="var(--warn)" stroke-width="1.5"/>
+        <!-- 右堤防 -->
+        <polygon points="245,150 275,96 310,150" fill="var(--warn-soft)" stroke="var(--warn)" stroke-width="1.5"/>
+        <!-- 河水（水面高於地面虛線）-->
+        <polygon points="206,116 254,116 245,150 215,150" fill="var(--sky-soft)" stroke="var(--sky)" stroke-width="1.5"/>
+        <line x1="206" y1="116" x2="254" y2="116" stroke="var(--sky)" stroke-width="2.5"/>
+        <!-- 標註 -->
+        <text x="230" y="108" text-anchor="middle" font-size="11" class="svg-ink" font-weight="700">水面高於地面</text>
+        <text x="185" y="88" text-anchor="middle" font-size="11" class="svg-soft">堤防</text>
+        <text x="275" y="88" text-anchor="middle" font-size="11" class="svg-soft">堤防</text>
+        <text x="70" y="145" text-anchor="middle" font-size="11" class="svg-soft">兩岸地面</text>
+        <text x="390" y="145" text-anchor="middle" font-size="11" class="svg-soft">兩岸地面</text>
+        <text x="230" y="180" text-anchor="middle" font-size="11" class="svg-soft">泥沙不斷淤積，河床越墊越高</text>
+      </svg>
+      <figcaption>黃河下游「地上河（懸河）」：河床／水面比兩岸地面還高，靠堤防擋住</figcaption>
+    </figure>
+    <div class="flow">
+      <div class="node">流經黃土高原</div><div class="down">↓</div>
+      <div class="node">帶走大量泥沙（含沙量世界最大）</div><div class="down">↓</div>
+      <div class="node">下游流速慢、泥沙淤積</div><div class="down">↓</div>
+      <div class="node brand">河床抬高成「地上河」→ 易氾濫</div>
+    </div>
+
+    <!-- 重點四 水資源不均 + 南水北調 -->
+    <h3 class="block">💧 重點四：南方水多、北方水少 → 南水北調</h3>
+    <p>接第三章：南方雨多、北方雨少，所以水資源「南多北少」分布不均。北方（尤其華北）缺水，於是有了把水從南方調到北方的大工程：</p>
+    <div class="flow">
+      <div class="node sky">南方 · 雨多水多</div>
+      <div class="down">→</div>
+      <div class="node">水資源分布不均</div>
+      <div class="down">→</div>
+      <div class="node brand">南水北調（把水由南調往缺水的北方）</div>
+    </div>
+
+    <div class="box teacher">
+      <div class="bh">👨‍🏫 老師講解</div>
+      <p>河流的水量也跟著季風走（接第三章）：<strong>夏季雨多 → 河流水量大（汛期）；冬季雨少 → 水量小</strong>。而且以<strong>秦嶺—淮河線</strong>為界，以北的河流冬季會結冰、以南不結冰——你看，第三章那條魔王線又出現了。</p>
+    </div>
+
+    <!-- 會考陷阱 -->
+    <div class="box trap">
+      <div class="bh">⚠️ 會考三大陷阱</div>
+      <p>① <strong>最長的河</strong>：是<span class="yes">長江</span>，不是黃河（黃河第二長）。</p>
+      <p>② <strong>含沙量最大／地上河／母親河</strong>：都是<span class="yes">黃河</span>，別安到長江頭上。</p>
+      <p>③ <strong>南水北調方向</strong>：是<span class="yes">由南往北</span>（南方水多調給缺水的北方），不要記反。</p>
+    </div>
+
+    <!-- 考題偵測器 -->
+    <h3 class="block">🔥 考題偵測器：看到這種題，你要想到什麼</h3>
+    <div class="box detect">
+      <div class="bh">🔎 關鍵字 → 反射動作</div>
+      <p>📌 題目說「中國最長、水量最大、黃金水道、三峽」<br>→ 想到 <strong>長江</strong>。</p>
+      <p>📌 題目說「母親河、含沙量最大、下游河床高於地面」<br>→ 想到 <strong>黃河 · 地上河</strong>。</p>
+      <p>📌 題目說「河流流不到海、消失於內陸」<br>→ 想到 <strong>內流河（如塔里木河）</strong>。</p>
+      <p>📌 題目說「把水由水多的南方調往缺水的北方」<br>→ 想到 <strong>南水北調</strong>。</p>
+    </div>
+
+    <!-- 原創題 -->
+    <h3 class="block">📝 原創練習題（點選項作答）</h3>
+    <p class="gps-note">全部原創，練的是「看到新題也會做」，不是背題庫。作答後會出現解析。</p>
+    <div id="quizzes4"></div>
+
+  </section>
+
+  <!-- ================= 第五章 ================= -->
+  <section id="ch5">
+    <div class="lead-chap">
+      <div class="cn">第五章</div>
+      <h2>產業：南稻北麥的經濟版圖</h2>
+      <p>前四章講「環境長怎樣」，這章要看「人怎麼靠環境過活」。答案很單純——<strong>環境給你什麼條件，你就做什麼產業</strong>。同一條秦嶺淮河，連你碗裡吃的是飯還是麵都分好了。</p>
+    </div>
+
+    <!-- 故事開場 -->
+    <h3 class="block">🎬 故事開場：看天吃飯</h3>
+    <p>為什麼南方人吃米飯、北方人愛吃麵食？不是誰規定的，是<strong>環境決定的</strong>：稻米要又熱又多水，剛好是南方；小麥比較耐旱，剛好適合北方。這就是整條因果鏈走到最後的結果。</p>
+    <div class="talk"><div class="who">🌾</div><div class="say"><b>老師</b>「農業是地理的『成績單』——前面地形氣候水文考幾分，這裡就種出什麼來。」</div></div>
+
+    <!-- 重點一 南稻北麥 -->
+    <h3 class="block">🍚 重點一：南稻北麥（秦嶺淮河線又出現了）</h3>
+    <p>還記得第三章那條魔王線嗎？它也是農業的分界。以秦嶺—淮河為界，南北種的東西完全不同：</p>
+    <div class="divide">
+      <div class="side north">
+        <div class="lab">🌾 北方（以北）</div>
+        <ul>
+          <li>以<b>旱田</b>為主</li>
+          <li>主要種<b>小麥</b>（麵食文化）</li>
+          <li>雨較少、較冷，<b>一年一熟</b>或兩年三熟</li>
+        </ul>
+      </div>
+      <div class="bar">秦嶺 — 淮河 線（農業分界）</div>
+      <div class="side south">
+        <div class="lab">🍚 南方（以南）</div>
+        <ul>
+          <li>以<b>水田</b>為主</li>
+          <li>主要種<b>稻米</b>（米食文化）</li>
+          <li>又熱又多雨，<b>一年二至三熟</b>（熟制多）</li>
+        </ul>
+      </div>
+    </div>
+    <div class="box mem">
+      <div class="bh">🧠 一句話記農業南北</div>
+      <p class="punch">南稻北麥、南水田北旱田；越往南越熱越濕，一年還能多種幾次。</p>
+    </div>
+
+    <!-- 重點二 東農西牧 -->
+    <h3 class="block">🐄 重點二：東農西牧（種田 vs 放牧）</h3>
+    <p>南稻北麥是「東部能種田」的內部差異。但整個中國其實還有一條更大的分工：<strong>東邊種田、西邊放牧</strong>，關鍵一樣是雨量（接第三章三大自然區）：</p>
+    <div class="upgrade">
+      <div class="up" style="border-left-color:var(--brand)"><div class="t">🌾 東部季風區</div><div class="goal">雨量足 → 以<b>農耕（種植業）</b>為主，就是南稻北麥的舞台。</div></div>
+      <div class="up" style="border-left-color:var(--warn)"><div class="t">🐑 西北乾燥區</div><div class="goal">太乾不能種 → 以<b>畜牧業</b>為主（草原放牧，如內蒙古）。</div></div>
+      <div class="up" style="border-left-color:var(--sky)"><div class="t">🐂 青藏高寒區</div><div class="goal">又高又冷 → <b>高山畜牧</b>（如放牧犛牛）。</div></div>
+    </div>
+    <div class="box mem">
+      <div class="bh">🧠 記憶點</div>
+      <p class="punch">東邊夠濕能種田（東農）、西邊太乾只能放牧（西牧）。</p>
+    </div>
+
+    <!-- 重點三 工業與經濟：沿海先富 -->
+    <h3 class="block">🏭 重點三：工業與經濟——為什麼「沿海先富」</h3>
+    <p>改革開放後，中國工業快速發展，成為世界重要的製造業基地（「<strong>世界工廠</strong>」）。但發展不平均：<strong>東部沿海遠比西部內陸發達</strong>。原因也很地理：</p>
+    <div class="flow">
+      <div class="node sky">東部沿海 · 交通便利、對外貿易方便</div>
+      <div class="down">↓</div>
+      <div class="node">設經濟特區（如深圳），最早發展</div>
+      <div class="down">↓</div>
+      <div class="node brand">東部先富 → 東西經濟差距大（東富西貧）</div>
+    </div>
+
+    <div class="box teacher">
+      <div class="bh">👨‍🏫 老師講解</div>
+      <p>整章其實就一句話：<strong>自然環境 → 決定產業 → 決定貧富。</strong></p>
+      <p>雨量決定「種田還是放牧」；秦嶺淮河決定「種稻還是種麥」；靠不靠海決定「工業先不先發展」。這正是本套講義的主線——<strong>環境怎麼決定人怎麼生活</strong>。素養題最愛把「某地環境」給你，要你推「當地適合什麼產業」。</p>
+    </div>
+
+    <!-- 會考陷阱 -->
+    <div class="box trap">
+      <div class="bh">⚠️ 會考三大陷阱</div>
+      <p>① <strong>南稻北麥別記反</strong>：<span class="yes">南方水田種稻、北方旱田種麥</span>。</p>
+      <p>② <strong>熟制</strong>：越往<span class="yes">南</span>越熱，一年能種越多次（南方熟制多）。</p>
+      <p>③ <strong>東農西牧</strong>：西北是<span class="yes">畜牧</span>（太乾），不是大規模種植。</p>
+    </div>
+
+    <!-- 考題偵測器 -->
+    <h3 class="block">🔥 考題偵測器：看到這種題，你要想到什麼</h3>
+    <div class="box detect">
+      <div class="bh">🔎 關鍵字 → 反射動作</div>
+      <p>📌 題目說「以水田為主、種稻、一年二至三熟」<br>→ 想到 <strong>南方（秦嶺淮河以南）</strong>。</p>
+      <p>📌 題目說「旱田、小麥、麵食、雨較少」<br>→ 想到 <strong>北方（以北）</strong>。</p>
+      <p>📌 題目說「乾燥草原、以放牧牛羊為主」<br>→ 想到 <strong>西北畜牧（東農西牧）</strong>。</p>
+      <p>📌 題目說「經濟特區、對外貿易、製造業發達」<br>→ 想到 <strong>東部沿海先發展 · 世界工廠</strong>。</p>
+    </div>
+
+    <!-- 原創題 -->
+    <h3 class="block">📝 原創練習題（點選項作答）</h3>
+    <p class="gps-note">全部原創，練的是「看到新題也會做」，不是背題庫。作答後會出現解析。</p>
+    <div id="quizzes5"></div>
+
+  </section>
+
+  <!-- ================= 第六章 ================= -->
+  <section id="ch6">
+    <div class="lead-chap">
+      <div class="cn">第六章</div>
+      <h2>人口與都市：東多西少</h2>
+      <p>前五章決定了「哪裡好住、哪裡好賺錢」，這章就看結果：<strong>人往好住、好賺的地方跑</strong>。所以中國人口嚴重「東多西少」，還有一條專門切人口的招牌界線。</p>
+    </div>
+
+    <!-- 故事開場 -->
+    <h3 class="block">🎬 故事開場：人會往哪裡跑？</h3>
+    <p>如果你可以選，你會住在平坦、暖濕、工作又多的東部沿海，還是又高又乾又冷的西部高原？大多數人的選擇，就是中國人口分布的答案——<strong>擠在東邊</strong>。</p>
+
+    <!-- 重點一 東多西少 + 黑河騰衝線 -->
+    <h3 class="block">🗺 重點一：東多西少（黑河—騰衝線）</h3>
+    <p>中國有一條著名的人口界線——<strong>黑河—騰衝線</strong>（一條由東北到西南的斜線）。線的東南側人口密集、西北側人口稀疏，落差非常大：</p>
+    <figure class="figure">
+      <svg viewBox="0 0 360 300" role="img" aria-label="黑河騰衝線人口分布示意圖：東南密集、西北稀疏">
+        <rect x="30" y="30" width="300" height="230" rx="12" fill="var(--card)" stroke="var(--line-strong)" stroke-width="1.5"/>
+        <!-- 黑河—騰衝斜線 -->
+        <line x1="300" y1="55" x2="95" y2="240" stroke="var(--brand)" stroke-width="2.5" stroke-dasharray="6 4"/>
+        <text x="312" y="50" text-anchor="end" font-size="11" class="svg-soft">黑河（東北）</text>
+        <text x="95" y="255" text-anchor="middle" font-size="11" class="svg-soft">騰衝（西南）</text>
+        <!-- 西北：稀疏（少數點）-->
+        <g fill="var(--brand)">
+          <circle cx="95" cy="170" r="3.5"/><circle cx="78" cy="140" r="3.5"/>
+          <circle cx="122" cy="150" r="3.5"/><circle cx="88" cy="110" r="3.5"/>
+        </g>
+        <text x="105" y="78" text-anchor="middle" font-size="12" class="svg-ink" font-weight="700">西北半壁</text>
+        <text x="105" y="94" text-anchor="middle" font-size="11" class="svg-soft">人口稀疏</text>
+        <!-- 東南：密集（很多點）-->
+        <g fill="var(--brand)">
+          <circle cx="210" cy="200" r="3.5"/><circle cx="240" cy="176" r="3.5"/><circle cx="268" cy="206" r="3.5"/>
+          <circle cx="292" cy="182" r="3.5"/><circle cx="220" cy="232" r="3.5"/><circle cx="255" cy="235" r="3.5"/>
+          <circle cx="285" cy="238" r="3.5"/><circle cx="202" cy="167" r="3.5"/><circle cx="248" cy="200" r="3.5"/>
+          <circle cx="275" cy="188" r="3.5"/><circle cx="305" cy="216" r="3.5"/><circle cx="230" cy="162" r="3.5"/>
+          <circle cx="262" cy="168" r="3.5"/><circle cx="300" cy="240" r="3.5"/>
+        </g>
+        <text x="250" y="128" text-anchor="middle" font-size="12" class="svg-ink" font-weight="700">東南半壁</text>
+        <text x="250" y="144" text-anchor="middle" font-size="11" class="svg-soft">人口密集</text>
+      </svg>
+      <figcaption>黑河—騰衝線：東南側人口密集、西北側人口稀疏（每個點代表人口）</figcaption>
+    </figure>
+
+    <!-- 重點二 為什麼 -->
+    <h3 class="block">🤔 重點二：為什麼「東多西少」？（全是前幾章）</h3>
+    <p>人口分布不是隨機的，它剛好是前五章環境的「總結果」：</p>
+    <div class="flow">
+      <div class="node sky">東部：地形平坦 · 氣候暖濕 · 農業發達 · 經濟繁榮</div>
+      <div class="down">↓</div>
+      <div class="node">適合居住、工作機會多</div>
+      <div class="down">↓</div>
+      <div class="node brand">人口密集（東多）</div>
+    </div>
+    <p style="text-align:center;color:var(--ink-soft);font-size:14px">反過來，西部高山、乾旱、高寒 → 難住難種 → <strong>人口稀疏（西少）</strong>。</p>
+
+    <!-- 別混：兩條線 -->
+    <div class="box trap">
+      <div class="bh">⚠️ 超高頻陷阱：兩條招牌界線別搞混</div>
+      <p><span class="yes">秦嶺—淮河線</span>（大致東西向的橫線）：分<strong>氣候與農業</strong>（0°C、800mm、稻麥）。</p>
+      <p><span class="yes">黑河—騰衝線</span>（東北—西南的斜線）：分<strong>人口疏密</strong>（東南密、西北疏）。</p>
+      <p style="margin-top:8px">👉 一條管「南北」的氣候農業，一條管「東西（南）」的人口。看到題目先問：它在分什麼？</p>
+    </div>
+
+    <!-- 重點三 人口移動與都市化 -->
+    <h3 class="block">🏙 重點三：人口移動與都市化</h3>
+    <p>經濟發展後，大量人口離開鄉村、湧向都市找工作，尤其是往東部沿海的大城市（如上海、廣州、深圳）。這股由內陸農村往沿海城市的人潮，常稱為「<strong>民工潮</strong>」：</p>
+    <div class="flow">
+      <div class="node">西部／內陸農村（工作少）</div>
+      <div class="down">→</div>
+      <div class="node sky">東部沿海都市（工作多）</div>
+      <div class="down">↓</div>
+      <div class="node brand">鄉村人口移入都市 → 都市化</div>
+    </div>
+    <div class="box mem">
+      <div class="bh">🧠 人口移動方向</div>
+      <p class="punch">人往東、往沿海、往都市跑——哪裡有工作，人就往哪去。</p>
+    </div>
+
+    <div class="box teacher">
+      <div class="bh">👨‍🏫 老師講解（含時事）</div>
+      <p>中國人口太多，曾長期實施<strong>「一胎化」（計畫生育）</strong>來控制人口成長。但近年反而面臨<strong>少子化、人口老化</strong>，政策已經<strong>放寬（開放二胎、三胎）</strong>。</p>
+      <p>👉 這是會隨時間改變的時事考點：舊課本強調「限制生育」，新趨勢卻是「鼓勵生育」。素養題若結合時事，要看它問的是哪個階段。</p>
+    </div>
+
+    <!-- 考題偵測器 -->
+    <h3 class="block">🔥 考題偵測器：看到這種題，你要想到什麼</h3>
+    <div class="box detect">
+      <div class="bh">🔎 關鍵字 → 反射動作</div>
+      <p>📌 題目說「人口東南密集、西北稀疏，有一條東北—西南的分界」<br>→ 想到 <strong>黑河—騰衝線</strong>。</p>
+      <p>📌 題目問「為何東部人口密集」<br>→ 想到 <strong>地形平坦＋氣候暖濕＋經濟發達＝宜居</strong>。</p>
+      <p>📌 題目說「大量農村人口移往沿海城市工作」<br>→ 想到 <strong>民工潮／都市化（往東、往沿海）</strong>。</p>
+      <p>📌 題目提到「一胎化、放寬生育、人口老化」<br>→ 想到 <strong>人口政策（時事）</strong>。</p>
+    </div>
+
+    <!-- 原創題 -->
+    <h3 class="block">📝 原創練習題（點選項作答）</h3>
+    <p class="gps-note">全部原創，練的是「看到新題也會做」，不是背題庫。作答後會出現解析。</p>
+    <div id="quizzes6"></div>
+
+  </section>
+
+  <!-- ================= 第七章 ================= -->
+  <section id="ch7">
+    <div class="lead-chap">
+      <div class="cn">第七章 · 壓軸</div>
+      <h2>區域地理：把中國切塊來記</h2>
+      <p>前六章你已經學會整條因果鏈。這一章做的事很簡單：<strong>把中國切成幾塊，看每一塊怎麼把前面學的組合起來</strong>。學會這招，給你任何一區，你都能自己推出它的環境和生活。</p>
+    </div>
+
+    <!-- 故事開場 -->
+    <h3 class="block">🎬 故事開場：每一區都是一份「套餐」</h3>
+    <p>區域地理最讓人頭痛，因為好像要背一堆各地資料。但其實不用——<strong>每個地區就是前六章的一組「套餐」</strong>：某種位置＋某種地形＋某種氣候，自然配出某種產業和人口。把因果鏈套上去，就全出來了。</p>
+    <div class="talk"><div class="who">🍱</div><div class="say"><b>老師</b>「不是背四個地區，是把同一條因果鏈，套進四個不同的環境裡跑一遍。」</div></div>
+
+    <!-- 四大區怎麼分 -->
+    <h3 class="block">✂️ 中國四大地理區，用你學過的線來分</h3>
+    <p>四大區的界線，剛好就是前面章節那幾條招牌線：</p>
+    <div class="upgrade">
+      <div class="up" style="border-left-color:var(--brand)"><div class="t">🧭 北方 ⇄ 南方</div><div class="goal">用<b>秦嶺—淮河線</b>分（第三章那條氣候農業魔王線）。</div></div>
+      <div class="up" style="border-left-color:var(--warn)"><div class="t">🌊 東部 ⇄ 西北</div><div class="goal">用<b>季風到不到得了</b>分：季風到＝東部濕潤，到不了＝西北乾燥。</div></div>
+      <div class="up" style="border-left-color:var(--sky)"><div class="t">🏔 分出青藏</div><div class="goal">用<b>地勢（第一階梯）</b>分：又高又冷，自成一區。</div></div>
+    </div>
+
+    <!-- 四大區對照表 -->
+    <h3 class="block">🗺 四大地理區對照表（因果鏈總套用）</h3>
+    <div class="tblwrap">
+      <table class="rev">
+        <thead><tr><th>地區</th><th>位置／界線</th><th>氣候</th><th>主要產業</th><th>人口</th></tr></thead>
+        <tbody>
+          <tr><th>北方<br>地區</th><td>秦嶺—淮河<b>以北</b></td><td>溫帶，較乾冷</td><td>旱田<b>小麥</b>；東北重工業</td><td>較多</td></tr>
+          <tr><th>南方<br>地區</th><td>秦嶺—淮河<b>以南</b></td><td>亞熱帶，濕熱</td><td>水田<b>稻米</b>；沿海工商發達</td><td>最密集</td></tr>
+          <tr><th>西北<br>地區</th><td>深居內陸、季風到不了</td><td><b>乾燥</b>少雨</td><td><b>畜牧</b>＋綠洲灌溉農業</td><td>稀疏</td></tr>
+          <tr><th>青藏<br>地區</th><td>地勢最高（第一階梯）</td><td><b>高寒</b></td><td>高山畜牧（<b>犛牛</b>）</td><td>最稀疏</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="box mem">
+      <div class="bh">🧠 四區一句話</div>
+      <p class="punch">北麥、南稻、西北牧、青藏寒。</p>
+      <p>四個字組各記一區的招牌，剩下的細節都能用因果鏈自己補回來。</p>
+    </div>
+
+    <div class="box teacher">
+      <div class="bh">👨‍🏫 老師講解</div>
+      <p>示範一次「套餐推理」：題目說「某地深居內陸、氣候乾燥、以放牧和綠洲灌溉為主、人口稀疏」——</p>
+      <p>你不用背它叫什麼，直接推：<strong>乾燥＝季風到不了＝西北 → 西北地區</strong>。這就是本套講義的終極目標：<strong>看到環境，就能推出一切</strong>，而不是死背。</p>
+    </div>
+
+    <!-- 會考陷阱 -->
+    <div class="box trap">
+      <div class="bh">⚠️ 會考兩大陷阱</div>
+      <p>① <strong>青藏 vs 西北，別把原因搞混</strong>：西北是「<span class="yes">乾燥（離海遠）</span>」，青藏是「<span class="yes">高寒（海拔高）</span>」——都人口稀疏，但原因不同。</p>
+      <p>② <strong>界線對應</strong>：北方南方用<span class="yes">秦嶺淮河</span>分；<span class="no">不是</span>用黑河騰衝線（那是分人口的）。</p>
+    </div>
+
+    <!-- 考題偵測器 -->
+    <h3 class="block">🔥 考題偵測器：看到這種題，你要想到什麼</h3>
+    <div class="box detect">
+      <div class="bh">🔎 關鍵字 → 反射動作</div>
+      <p>📌 題目說「高寒、世界屋脊、放牧犛牛」<br>→ 想到 <strong>青藏地區</strong>。</p>
+      <p>📌 題目說「乾燥、綠洲、靠灌溉、以畜牧為主」<br>→ 想到 <strong>西北地區</strong>。</p>
+      <p>📌 題目說「亞熱帶、水田稻米、沿海工商發達」<br>→ 想到 <strong>南方地區</strong>。</p>
+      <p>📌 題目說「溫帶、旱田小麥、東北重工業」<br>→ 想到 <strong>北方地區</strong>。</p>
+    </div>
+
+    <!-- 原創題 -->
+    <h3 class="block">📝 原創練習題（點選項作答）</h3>
+    <p class="gps-note">全部原創，練的是「看到新題也會做」，不是背題庫。作答後會出現解析。</p>
+    <div id="quizzes7"></div>
+
+    <!-- 全書收尾 -->
+    <div class="box mem" style="margin-top:26px">
+      <div class="bh">🎓 七章讀完，回到那條因果鏈</div>
+      <p>恭喜你走完整條中國地理的主線。最後再念一次這條「地理骨架」，全部就串起來了：</p>
+      <p class="punch" style="font-size:clamp(16px,3.6vw,20px)">位置 → 地形 → 氣候 → 水文 → 產業 → 人口 → 區域</p>
+      <p>位置決定它又大又廣 → 地勢西高東低 → 季風帶來乾濕 → 河流向東奔流 → 南稻北麥的產業 → 東多西少的人口 → 最後拼成四大地理區。回到最上面的「地理 GPS」再對一次，每一格都住著一個你已經懂的道理了。</p>
+    </div>
+
+  </section>
+
+  <footer>
+    <p class="disc">本講義為<b>原創教學設計</b>，不抄錄歷屆會考或學校試卷；題目均依公開試題的<b>題型與考點</b>重新設計。內容以翰林／康軒／南一三版本共同核心為準，實際授課請對照學生使用版本。地理數據（面積、人口等）會隨年份更新，請以最新資料為準。</p>
+    <p>《八年級地理：不用死背的中國地理》· 第一章 完整成品 · 其餘章節製作中</p>
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var root=document.documentElement, tb=document.getElementById('theme');
+  function cur(){var t=root.getAttribute('data-theme');
+    if(t)return t; return matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+  try{var s=localStorage.getItem('geo-theme'); if(s)root.setAttribute('data-theme',s);}catch(e){}
+  tb.addEventListener('click',function(){
+    var n=cur()==='dark'?'light':'dark';
+    root.setAttribute('data-theme',n);
+    try{localStorage.setItem('geo-theme',n);}catch(e){}
+  });
+
+  var themes=[
+    {n:'位置',tag:'起點',d:'亞洲東部、太平洋西岸，海陸兼備；又大又廣，什麼都有。'},
+    {n:'地形',tag:'骨架',d:'地勢西高東低，像三階樓梯，決定河流流向。'},
+    {n:'氣候',tag:'關鍵',d:'季風主宰乾濕：夏濕冬乾、東南濕西北乾。'},
+    {n:'水文',tag:'命脈',d:'順著地勢，長江黃河等大河由西向東入海。'},
+    {n:'產業',tag:'生活',d:'氣候決定種什麼：南稻北麥、南北差異大。'},
+    {n:'人口',tag:'分布',d:'環境好住的東部人多，乾旱高冷的西部人少。'},
+    {n:'區域',tag:'總結',d:'北、南、西各有一套環境與生活方式。'}
+  ];
+  var g=document.getElementById('gpsgrid');
+  g.innerHTML=themes.map(function(x){
+    return '<div class="dyn"><div class="n">'+x.n+'<span class="tag">'+x.tag+
+      '</span></div><div class="d">'+x.d+'</div></div>';
+  }).join('');
+  g.addEventListener('click',function(e){var c=e.target.closest('.dyn'); if(c)c.classList.toggle('on');});
+
+  var LAB=['A','B','C','D'];
+  function mountQuiz(id, arr){
+    var box=document.getElementById(id); if(!box)return;
+    box.innerHTML=arr.map(function(q,qi){
+      var opts=q.opts.map(function(o,oi){
+        return '<li data-o="'+oi+'"><span class="lab">'+LAB[oi]+'</span>'+o+'</li>';
+      }).join('');
+      return '<div class="quiz"><span class="qn">第 '+(qi+1)+' 題</span>'+
+        '<span class="qtype">'+q.type+'</span><div class="stem">'+q.stem+'</div>'+
+        '<ul class="opts" data-ans="'+q.ans+'">'+opts+'</ul>'+
+        '<div class="exp" hidden><b>解析：</b>'+q.exp+'</div></div>';
+    }).join('');
+    box.addEventListener('click',function(e){
+      var li=e.target.closest('li[data-o]'); if(!li)return;
+      var ul=li.parentNode; if(ul.dataset.done)return;
+      ul.dataset.done='1';
+      var ans=+ul.dataset.ans, oi=+li.dataset.o;
+      [].forEach.call(ul.children,function(c){
+        c.classList.add('locked');
+        var i=+c.dataset.o;
+        if(i===ans)c.classList.add('correct');
+        else if(i===oi)c.classList.add('wrong');
+      });
+      var exp=ul.parentNode.querySelector('.exp'); if(exp)exp.hidden=false;
+    });
+  }
+
+  var qs1=[
+    {type:'概念題',
+     stem:'關於中國的位置，下列敘述何者正確？',
+     opts:['位於亞洲西部、大西洋東岸','位於亞洲東部、太平洋西岸，海陸兼備','四面環海的島國','完全被陸地包圍的內陸國'],
+     ans:1,
+     exp:'中國位於<b>亞洲東部、太平洋西岸</b>，一邊是世界最大陸、一邊是世界最大洋，稱為<b>海陸兼備</b>。這也造成東部濕潤、西部乾燥的差異。'},
+    {type:'因果題',
+     stem:'中國南北氣候「從熱到冷」什麼類型都有，最主要的原因是？',
+     opts:['因為工業發達','因為南北跨的緯度很廣','因為人口很多','因為使用同一個標準時間'],
+     ans:1,
+     exp:'氣候由熱到冷，關鍵是<b>南北跨緯度廣</b>：緯度低（南）較熱、緯度高（北）較冷，所以熱帶到寒溫帶都有。'},
+    {type:'陷阱題',
+     stem:'中國東西跨的經度很廣，關於全國的時間制度，下列何者正確？',
+     opts:['依經度劃分成好幾個官方時區','全國統一使用「北京時間」','東部與西部各用一個時區','不使用任何標準時間'],
+     ans:1,
+     exp:'雖然跨經度廣、理論上有時差，但<b>行政上全國統一使用「北京時間」</b>。所以西部天還沒亮，時鐘卻已是北京的上班時間——這是常考反差。'},
+    {type:'概念題',
+     stem:'關於中國的民族分布，下列敘述何者最恰當？',
+     opts:['全國只有漢族','以漢族為主，少數民族多分布在邊疆／西部','少數民族集中在東部沿海','各民族平均分布，毫無差異'],
+     ans:1,
+     exp:'中國<b>以漢族為主</b>，並有眾多少數民族，且多分布於<b>邊疆／西部</b>地區。'},
+    {type:'時事題',
+     stem:'某份最新資料顯示，中國的人口在世界排名出現變化。依近年（2023 年起）的實際情況，下列敘述何者最正確？',
+     opts:['中國人口仍穩居世界第一','中國人口近年被印度超越，居世界第二，但仍是人口大國','中國人口已跌出世界前十','中國是全世界人口最少的國家之一'],
+     ans:1,
+     exp:'舊課本常寫「世界第一」，但<b>近年已被印度超越，中國居世界第二</b>。素養題若結合時事，要看問的是哪個年份；中國依然是不折不扣的人口大國。'}
+  ];
+  mountQuiz('quizzes1', qs1);
+
+  var qs2=[
+    {type:'概念題',
+     stem:'關於中國的地勢，下列敘述何者正確？',
+     opts:['東高西低，呈三級階梯','西高東低，呈三級階梯','南高北低，一路平坦','四周高、中間低的盆地狀'],
+     ans:1,
+     exp:'中國地勢<b>西高東低，呈三級階梯</b>狀，像一道由西往東的下坡樓梯。記憶：西高東低，三階下樓梯。'},
+    {type:'因果題',
+     stem:'中國的大河（如長江、黃河）大多由西向東流入海。造成這個現象最主要的原因是？',
+     opts:['因為東部人口多','因為地勢西高東低，水往低處流','因為季風由東往西吹','因為東部氣溫較低'],
+     ans:1,
+     exp:'河流流向由<b>地勢</b>決定：<b>西高東低</b>，水往低處流，所以大河幾乎都由西向東奔向東邊的海。不是巧合。'},
+    {type:'因果題',
+     stem:'中國在三大階梯的「交界處」水力（水能）資源特別豐富，最主要的原因是？',
+     opts:['交界處雨量特別多','交界處地勢落差大，河流水流湍急','交界處人口最密集','交界處全是平原'],
+     ans:1,
+     exp:'階梯交界處<b>地勢落差大</b>，河流從高階衝向低階，水流急、能量大，因此<b>水力資源豐富</b>，適合水力發電。'},
+    {type:'判讀題',
+     stem:'某地區平均海拔為全中國最高，素有「世界屋脊」之稱。此地區位於三大階梯中的哪一階，是什麼地形？',
+     opts:['第一階梯，青藏高原','第二階梯，四川盆地','第三階梯，華北平原','第三階梯，長江中下游平原'],
+     ans:0,
+     exp:'海拔最高、世界屋脊＝<b>青藏高原</b>，位於<b>第一階梯</b>。第三階梯是最低、臨海的平原丘陵。'},
+    {type:'陷阱題',
+     stem:'關於中國的地形組成，下列敘述何者正確？',
+     opts:['以平原為主，遍布全國','以山地、高原為主，平原多集中在東部','全國幾乎都是沙漠','全國幾乎都是盆地'],
+     ans:1,
+     exp:'常見陷阱！中國地形<b>以山地、高原為主</b>，平原比例其實不高，且多<b>集中在東部第三階梯</b>。別誤以為「以平原為主」。'}
+  ];
+  mountQuiz('quizzes2', qs2);
+
+  var qs3=[
+    {type:'因果題',
+     stem:'中國東部夏季常常又熱又多雨，這種「最熱的季節同時也最多雨」的現象稱為雨熱同期。造成夏季多雨最主要的原因是？',
+     opts:['冬季風從內陸帶來水氣','夏季風從海洋帶來大量水氣','因為地勢西高東低','因為緯度很高'],
+     ans:1,
+     exp:'夏季<b>夏季風由海洋吹向陸地、帶來水氣</b>，造成高溫多雨（雨熱同期）。冬季風相反：從內陸吹出、乾冷少雨。'},
+    {type:'陷阱題',
+     stem:'關於中國的年降水量分布，下列敘述何者最正確？',
+     opts:['由西北向東南遞減','由東南向西北遞減','由北向南遞減','全國各地降水量都一樣'],
+     ans:1,
+     exp:'夏季風從東南海上來，越往內陸水氣越少，所以降水<b>由東南向西北遞減</b>：東南沿海雨多、西北內陸乾旱。'},
+    {type:'判讀題',
+     stem:'某條界線同時是「1 月均溫 0°C 等溫線」「年降水量 800mm 等雨量線」，也是南方水田稻作與北方旱田麥作的分界。這條界線是？',
+     opts:['大興安嶺','秦嶺—淮河線','崑崙山','長江'],
+     ans:1,
+     exp:'集 0°C＋800mm＋稻麥＋水田旱田等多條分界於一身的，就是<b>秦嶺—淮河線</b>，中國地理最重要的界線。'},
+    {type:'比較題',
+     stem:'依秦嶺—淮河線來比較南北方，下列哪一組敘述完全正確？',
+     opts:['北方：種稻、水田、冬季不結冰','南方：種稻、水田、年雨量多於 800mm','北方：年雨量多於 800mm、亞熱帶','南方：種小麥、旱田、1 月低於 0°C'],
+     ans:1,
+     exp:'南方（以南）＝<b>稻作、水田、年雨量>800mm、1月>0°C不結冰、亞熱帶</b>。北方相反：麥作、旱田、雨量<800mm、會結冰。'},
+    {type:'概念題',
+     stem:'中國西北地區（如新疆一帶）氣候乾燥、多沙漠草原。造成當地乾燥最主要的原因是？',
+     opts:['海拔太高','緯度太低','深居內陸、離海遠，夏季風難以到達','人口太多'],
+     ans:2,
+     exp:'西北乾燥區<b>深居內陸、離海遠</b>，夏季風的水氣送不到，所以乾燥少雨。這是「三大自然區」中的西北乾燥區。（青藏高寒區則是因海拔太高。）'}
+  ];
+  mountQuiz('quizzes3', qs3);
+
+  var qs4=[
+    {type:'陷阱題',
+     stem:'中國最長的河流是下列哪一條？',
+     opts:['黃河','長江','珠江','塔里木河'],
+     ans:1,
+     exp:'中國<b>最長、水量最大</b>的是<b>長江</b>（有「黃金水道」之稱）。黃河是第二長河。別把「最長」記成黃河。'},
+    {type:'因果題',
+     stem:'黃河的含沙量是世界大河中數一數二的。造成黃河含沙量特別大的主要原因是？',
+     opts:['流經降水最多的地區','中游流經黃土高原，帶走大量泥沙','河道特別短','完全沒有支流'],
+     ans:1,
+     exp:'黃河中游<b>流經黃土高原</b>，沖走大量疏鬆的黃土泥沙，使含沙量世界最大，河水呈黃色。'},
+    {type:'概念題',
+     stem:'黃河下游出現「河床比兩岸地面還高、必須靠堤防約束」的特殊景象，這稱為？',
+     opts:['地上河（懸河）','內流河','黃金水道','外流河'],
+     ans:0,
+     exp:'泥沙在下游不斷淤積、河床越墊越高，形成<b>地上河（懸河）</b>：河床／水面高於兩岸地面，容易氾濫。'},
+    {type:'概念題',
+     stem:'中國西北地區有些河流最終並未流入海洋，而是消失於內陸或注入內陸湖。這類河流稱為？',
+     opts:['外流河','內流河','地上河','黃金水道'],
+     ans:1,
+     exp:'流不到海、消失於內陸的是<b>內流河</b>，分布在乾燥的西北（如塔里木河，中國最長內流河）。能入海的則是外流河。'},
+    {type:'情境題',
+     stem:'中國北方（尤其華北）長期缺水，因此興建大型工程把水資源從水量豐沛的地區調往缺水地區。這項工程與調水方向是？',
+     opts:['南水北調，由南往北','北水南調，由北往南','東水西調，由東往西','西水東調，由西往東'],
+     ans:0,
+     exp:'南方雨多水多、北方缺水，因此是<b>南水北調（由南往北）</b>。方向別記反：把水從多的南方調給缺水的北方。'}
+  ];
+  mountQuiz('quizzes4', qs4);
+
+  var qs5=[
+    {type:'因果題',
+     stem:'中國「南稻北麥」的農業差異，最主要是受下列哪一項自然條件影響？',
+     opts:['人口多寡','南北的氣候（水分與熱量）差異','政府規定','海拔高低相同'],
+     ans:1,
+     exp:'稻米需要高溫多水（南方），小麥較耐旱（北方），所以<b>南稻北麥</b>主要由<b>南北氣候（水熱）差異</b>決定——正是秦嶺淮河線的農業意義。'},
+    {type:'陷阱題',
+     stem:'以秦嶺—淮河線為界，關於南北農業的敘述，何者完全正確？',
+     opts:['北方水田種稻、南方旱田種麥','南方水田種稻、北方旱田種麥','南北都以旱田小麥為主','南北都以水田稻米為主'],
+     ans:1,
+     exp:'正確配對：<b>南方＝水田＋稻米</b>、<b>北方＝旱田＋小麥</b>。別把稻麥、水田旱田記反。'},
+    {type:'概念題',
+     stem:'中國西北地區（如內蒙古一帶）氣候乾燥，當地最主要發展的產業是？',
+     opts:['水田稻作','畜牧業（草原放牧）','熱帶雨林採集','海洋漁業'],
+     ans:1,
+     exp:'西北乾燥、不適合大規模種植，因此以<b>畜牧業（草原放牧）</b>為主，這就是「東農西牧」的西牧。'},
+    {type:'因果題',
+     stem:'中國經濟發展呈現「東部沿海遠比西部內陸發達」。造成沿海地區最早、最快發展的主要原因是？',
+     opts:['沿海降水最少','沿海交通便利、對外貿易方便，並設有經濟特區','沿海海拔最高','沿海完全沒有人口'],
+     ans:1,
+     exp:'沿海<b>交通便利、對外貿易方便</b>，又設立經濟特區（如深圳）最早開放，因此先富起來，造成東富西貧的差距。'},
+    {type:'情境題',
+     stem:'某地區降水充足、位於東部季風區、以水田種植稻米為主，且鄰近沿海、工商業發達。這個地區最可能位於中國的？',
+     opts:['西北內陸','青藏高原','東南沿海一帶','塔里木盆地'],
+     ans:2,
+     exp:'水田稻作＋東部季風區＋鄰海工商發達，指向<b>東南沿海一帶</b>（南方＋沿海）。西北乾燥、青藏高寒都不符合。'}
+  ];
+  mountQuiz('quizzes5', qs5);
+
+  var qs6=[
+    {type:'概念題',
+     stem:'關於中國的人口分布，下列敘述何者正確？',
+     opts:['西北密集、東南稀疏','東南密集、西北稀疏，以黑河—騰衝線為界','全國平均分布','集中在青藏高原'],
+     ans:1,
+     exp:'中國人口<b>東南密集、西北稀疏</b>，界線大致是<b>黑河—騰衝線</b>（東北到西南的斜線）。東部宜居、西部難住。'},
+    {type:'因果題',
+     stem:'中國東部人口特別密集，最主要的原因是？',
+     opts:['東部海拔最高','東部地形平坦、氣候暖濕、農業與經濟發達，適合居住','東部最乾旱','東部完全沒有都市'],
+     ans:1,
+     exp:'東部<b>地形平坦、氣候暖濕、農業發達、經濟繁榮</b>，宜居又有工作機會，所以人口密集。這是前五章環境的總結果。'},
+    {type:'陷阱題',
+     stem:'「秦嶺—淮河線」與「黑河—騰衝線」是中國兩條重要界線。關於兩者的區別，下列何者正確？',
+     opts:['兩條都是人口界線','秦嶺淮河線分氣候與農業；黑河騰衝線分人口疏密','秦嶺淮河線分人口；黑河騰衝線分氣候','兩條是同一條線'],
+     ans:1,
+     exp:'關鍵區分：<b>秦嶺淮河線＝氣候與農業界線</b>（0°C、800mm、稻麥）；<b>黑河騰衝線＝人口疏密界線</b>（東南密、西北疏）。別搞混。'},
+    {type:'情境題',
+     stem:'近幾十年，中國大量農村居民離開家鄉，前往沿海大城市（如深圳、上海）打工，形成「民工潮」。這股人口移動的主要方向是？',
+     opts:['由沿海往內陸','由都市往鄉村','由內陸／鄉村往東部沿海都市','由南往北的農業移動'],
+     ans:2,
+     exp:'工作機會集中在東部沿海城市，因此人口由<b>內陸／鄉村移往東部沿海都市</b>，推動都市化。人往有工作的地方跑。'},
+    {type:'時事題',
+     stem:'關於中國的人口政策變化，下列敘述最符合近年（新趨勢）實際情況的是？',
+     opts:['仍嚴格實施一胎化以限制人口','因面臨少子化與人口老化，已放寬生育（開放二胎、三胎）','完全禁止生育','鼓勵人口移出國外'],
+     ans:1,
+     exp:'中國曾長期一胎化限制人口，但近年因<b>少子化、人口老化</b>，政策已<b>放寬（開放二胎、三胎）</b>。這是會隨時間改變的時事考點。'}
+  ];
+  mountQuiz('quizzes6', qs6);
+
+  var qs7=[
+    {type:'概念題',
+     stem:'中國四大地理區中，「北方地區」與「南方地區」的分界線是下列何者？',
+     opts:['黑河—騰衝線','秦嶺—淮河線','長江','大興安嶺'],
+     ans:1,
+     exp:'北方與南方的分界是<b>秦嶺—淮河線</b>（氣候與農業界線）。黑河騰衝線是分「人口疏密」的，別搞混。'},
+    {type:'判讀題',
+     stem:'某地區平均海拔極高、氣候高寒、人口極稀疏，居民以放牧犛牛維生。這最可能是四大地理區中的哪一區？',
+     opts:['南方地區','北方地區','青藏地區','西北地區'],
+     ans:2,
+     exp:'高寒＋世界屋脊＋放牧犛牛＝<b>青藏地區</b>。它人口稀疏的主因是「海拔高、高寒」，而不是乾燥。'},
+    {type:'判讀題',
+     stem:'某地區深居內陸、氣候乾燥，農業必須依賴綠洲灌溉，並以畜牧為主。這是哪一區？',
+     opts:['西北地區','南方地區','青藏地區','北方地區'],
+     ans:0,
+     exp:'乾燥＋綠洲灌溉＋畜牧＝<b>西北地區</b>。它乾燥的主因是「深居內陸、季風到不了」。'},
+    {type:'判讀題',
+     stem:'某地區屬亞熱帶、氣候濕熱，以水田稻作為主，且鄰近沿海、工商業發達、人口密集。這是哪一區？',
+     opts:['北方地區','南方地區','西北地區','青藏地區'],
+     ans:1,
+     exp:'亞熱帶＋水田稻米＋沿海工商＋人口密集＝<b>南方地區</b>（秦嶺淮河以南）。'},
+    {type:'陷阱題',
+     stem:'西北地區與青藏地區的人口都很稀疏，但「稀疏的主要原因」並不相同。下列敘述何者正確？',
+     opts:['兩區都是因為太乾燥','西北因乾燥（離海遠）、青藏因高寒（海拔高）','西北因高寒、青藏因乾燥','兩區都是因為海拔太高'],
+     ans:1,
+     exp:'關鍵區分：<b>西北＝乾燥（深居內陸、離海遠）</b>；<b>青藏＝高寒（海拔太高）</b>。結果都人口稀疏，但成因不同，常被拿來當陷阱。'}
+  ];
+  mountQuiz('quizzes7', qs7);
+})();
+</script>

@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>不用死背的八年級社會</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@700;900&family=Noto+Sans+TC:wght@400;500;700&display=swap');
+  :root{
+    --paper:#f7f1e3;--card:#fffdf7;--ink:#2b2620;--ink-soft:#5f574b;
+    --line:#e2d7bf;--line-strong:#d3c39e;
+    --red:#b8412e;--red-soft:#f4ddd4;
+    --green:#26734a;--green-soft:#d9ebe0;
+    --gold-soft:#fbedc6;
+    --shadow:0 1px 2px rgba(60,45,20,.06), 0 10px 30px rgba(60,45,20,.09);
+    --serif:"Noto Serif TC","Songti TC",serif;--sans:"Noto Sans TC",system-ui,sans-serif;
+  }
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+    --paper:#191612;--card:#221e18;--ink:#efe7d6;--ink-soft:#b6ab97;
+    --line:#3a3227;--line-strong:#4a4033;
+    --red:#e8735c;--red-soft:#3a251f;--green:#5cbd8a;--green-soft:#143026;--gold-soft:#3a3016;
+    --shadow:0 1px 2px rgba(0,0,0,.3), 0 10px 30px rgba(0,0,0,.4);
+  }}
+  :root[data-theme="dark"]{
+    --paper:#191612;--card:#221e18;--ink:#efe7d6;--ink-soft:#b6ab97;
+    --line:#3a3227;--line-strong:#4a4033;
+    --red:#e8735c;--red-soft:#3a251f;--green:#5cbd8a;--green-soft:#143026;--gold-soft:#3a3016;
+    --shadow:0 1px 2px rgba(0,0,0,.3), 0 10px 30px rgba(0,0,0,.4);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);
+    line-height:1.7;-webkit-font-smoothing:antialiased;min-height:100vh}
+  .wrap{max-width:860px;margin:0 auto;padding:56px 20px 60px}
+  .hero{text-align:center;margin-bottom:40px}
+  .eyebrow{font-size:13px;letter-spacing:.26em;color:var(--ink-soft);font-weight:700}
+  h1{font-family:var(--serif);font-weight:900;font-size:clamp(28px,6.4vw,46px);
+    line-height:1.15;margin:14px 0 10px;text-wrap:balance}
+  h1 .r{color:var(--red)}
+  h1 .g{color:var(--green)}
+  .sub{color:var(--ink-soft);font-size:15px;max-width:32em;margin:0 auto}
+  .cards{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:600px){.cards{grid-template-columns:1fr}}
+  .card{display:flex;flex-direction:column;text-decoration:none;color:inherit;
+    background:var(--card);border:1px solid var(--line);border-radius:20px;padding:26px 24px;
+    box-shadow:var(--shadow);transition:transform .16s, border-color .16s}
+  .card:hover{transform:translateY(-4px)}
+  .card.hist:hover{border-color:var(--red)}
+  .card.geo:hover{border-color:var(--green)}
+  .seal{width:52px;height:52px;border-radius:13px;display:grid;place-items:center;
+    font-family:var(--serif);font-weight:900;font-size:26px;color:#fff;transform:rotate(-4deg);margin-bottom:16px}
+  .hist .seal{background:var(--red)}
+  .geo .seal{background:var(--green)}
+  .card h2{font-family:var(--serif);font-weight:900;font-size:22px;margin:0 0 4px}
+  .card .meta{font-size:12.5px;font-weight:700;letter-spacing:.03em;margin-bottom:12px}
+  .hist .meta{color:var(--red)}
+  .geo .meta{color:var(--green)}
+  .card .creed{font-size:14px;color:var(--ink-soft);line-height:1.6;flex:1}
+  .card .creed b{color:var(--ink)}
+  .go{margin-top:18px;align-self:flex-start;font-weight:700;font-size:14.5px;
+    padding:9px 18px;border-radius:11px;color:#fff}
+  .hist .go{background:var(--red)}
+  .geo .go{background:var(--green)}
+  .note{margin-top:34px;background:var(--gold-soft);border:1px solid var(--line-strong);
+    border-radius:14px;padding:15px 18px;font-size:13.5px;color:var(--ink-soft);line-height:1.7}
+  .note b{color:var(--ink)}
+  footer{margin-top:30px;text-align:center;font-size:12.5px;color:var(--ink-soft);line-height:1.7}
+  .tbtn{position:fixed;top:calc(14px + env(safe-area-inset-top,0px));right:16px;
+    border:1px solid var(--line-strong);background:var(--card);color:var(--ink);
+    width:38px;height:38px;border-radius:11px;cursor:pointer;font-size:16px}
+</style>
+</head>
+<body>
+<button class="tbtn" id="theme" title="切換深淺色" aria-label="切換深淺色">◐</button>
+<div class="wrap">
+  <div class="hero">
+    <div class="eyebrow">八年級社會 · 名師記憶講義</div>
+    <h1><span class="r">不用死背</span>的<br>中國史 <span class="g">×</span> 中國地理</h1>
+    <p class="sub">兩科一套邏輯：不是背年代和地名，是看懂「為什麼」。看故事、看圖，看完就記住。</p>
+  </div>
+
+  <div class="cards">
+    <a class="card hist" href="history.html">
+      <div class="seal">史</div>
+      <h2>中國史</h2>
+      <div class="meta">七章完整 · 35 題原創</div>
+      <div class="creed">秦漢到近代中國。<br><b>歷史不是背年代，是一群人為了解決問題做的一連串選擇。</b></div>
+      <span class="go">開始複習 →</span>
+    </a>
+    <a class="card geo" href="geography.html">
+      <div class="seal">地</div>
+      <h2>中國地理</h2>
+      <div class="meta">七章完整 · 35 題原創</div>
+      <div class="creed">位置到區域。<br><b>地理不是背地名，是看環境怎麼決定人怎麼生活。</b></div>
+      <span class="go">開始複習 →</span>
+    </a>
+  </div>
+
+  <div class="note">
+    📖 每一課都有：故事開場、時間軸／圖解、記憶口訣、名師講解、會考陷阱、考題偵測器、原創互動題（點選項可對答案）。手機也好讀，右上角可切換深／淺色。
+  </div>
+
+  <footer>
+    原創教學設計，不抄錄歷屆會考或學校試卷，僅依公開試題的題型與考點重新設計。<br>
+    內容以翰林／康軒／南一三版本共同核心為準，實際授課請對照學生使用版本。
+  </footer>
+</div>
+<script>
+  (function(){
+    var root=document.documentElement, tb=document.getElementById('theme');
+    function cur(){var t=root.getAttribute('data-theme');
+      return t||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');}
+    try{var s=localStorage.getItem('portal-theme'); if(s)root.setAttribute('data-theme',s);}catch(e){}
+    tb.addEventListener('click',function(){
+      var n=cur()==='dark'?'light':'dark';root.setAttribute('data-theme',n);
+      try{localStorage.setItem('portal-theme',n);}catch(e){}
+    });
+  })();
+</script>
+</body>
+</html>
