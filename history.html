@@ -320,6 +320,20 @@
     *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   }
 
+  /* 段考型複習卷 */
+  .opts li.sel{border-color:var(--red);box-shadow:inset 0 0 0 2px var(--red)}
+  .exam-num{font-size:12px;font-weight:700;color:var(--ink-soft)}
+  .exam-score{margin:14px 0 18px;padding:18px;border-radius:14px;border:1px solid var(--red);
+    background:var(--red-soft);text-align:center}
+  .exam-score .n{font-family:var(--serif);font-size:30px;font-weight:900;color:var(--red)}
+  .exam-score .msg{font-size:14px;color:var(--ink);margin-top:6px}
+  .exam-score[hidden]{display:none}
+  .exam-actions{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0 6px}
+  .exam-btn{border:1px solid var(--red);background:var(--red);color:#fff;border-radius:11px;
+    padding:11px 22px;font-size:15px;font-weight:700;cursor:pointer;font-family:var(--sans)}
+  .exam-btn:hover{filter:brightness(1.06)}
+  .exam-btn.ghost{background:transparent;color:var(--red)}
+
   @media(max-width:520px){
     .talk .who{width:38px;height:38px;font-size:18px}
     .creed{padding:15px 17px}
@@ -342,6 +356,7 @@
       <a href="#ch6">第六章</a>
       <a href="#ch7">第七章</a>
       <a href="#review">總複習</a>
+      <a href="#exam">複習卷</a>
     </nav>
     <button class="tbtn" id="theme" title="切換深淺色" aria-label="切換深淺色">◐</button>
   </div>
@@ -434,6 +449,11 @@
       <a class="chap" href="#review">
         <div class="cn">總複習</div><h3>中國史一張 A3 複習完</h3>
         <p>最後把整套骨架濃縮成一張速查表，可列印。</p>
+        <span class="st ready">✓ 完整成品</span>
+      </a>
+      <a class="chap" href="#exam">
+        <div class="cn">複習卷</div><h3>段考型複習卷（全學期綜合）</h3>
+        <p>七章綜合 22 題，作答後看分數與檢討。</p>
         <span class="st ready">✓ 完整成品</span>
       </a>
     </div>
@@ -1218,6 +1238,18 @@
     </div>
   </section>
 
+  <!-- ================= 段考型複習卷 ================= -->
+  <section id="exam">
+    <div class="sec-head"><span class="sec-num">TEST</span><h2>段考型複習卷：全學期綜合</h2></div>
+    <p class="gps-note">全 22 題、涵蓋七章。像真的段考一樣——<b>先把每題都選好，再按「交卷」看分數與檢討</b>。全部原創題。</p>
+    <div class="exam-score" id="examScore" hidden></div>
+    <div id="examBody"></div>
+    <div class="exam-actions">
+      <button class="exam-btn" id="examSubmit">交卷看分數</button>
+      <button class="exam-btn ghost" id="examReset">重作</button>
+    </div>
+  </section>
+
   <footer>
     <p class="disc">本講義為原創教學設計，不抄錄歷屆會考或學校試卷；題目均依公開試題的<b>題型與考點</b>重新設計。內容以翰林／康軒／南一三版本共同核心為準，實際授課請對照學生使用版本。</p>
     <p>《八年級歷史：不用死背的中國史》· 第一章 完整成品 · 其餘章節製作中</p>
@@ -1514,6 +1546,86 @@
       window.addEventListener('afterprint',restore);
       window.print();
       setTimeout(restore, 1500);
+    });
+  }
+
+  /* 段考型複習卷 */
+  var examQs=[
+    {type:'秦漢',stem:'秦始皇統一天下後推行文字、貨幣、度量衡與郡縣制。這一整套作為最能說明秦朝的什麼特色？',opts:['只重視軍事擴張','不只統一土地，連生活規則與制度都一起統一','放任地方自治','恢復封建分封'],ans:1,exp:'秦的重點是「制度整合包」——文字/貨幣/度量衡/郡縣制，把生活規則一起統一。'},
+    {type:'秦漢',stem:'秦朝統一後十餘年即滅亡。從素養角度，最能解釋其速亡的是？',opts:['皇帝天生殘暴','大型工程與徭役造成社會負擔，引發民眾反抗','外族入侵滅國','沒有繼承人'],ans:1,exp:'政策造成社會負擔→民眾反抗→政權崩潰，這才是因果關聯，而非「暴君」二字。'},
+    {type:'秦漢',stem:'漢武帝下令諸侯把封地分給所有子弟，其主要效果是？',opts:['增加諸侯收入','封地越分越小，諸侯勢力自然削弱','鼓勵人民多生','擴大諸侯權力'],ans:1,exp:'這是推恩令，用「分封子弟」使地方勢力自行分散，達到削藩。'},
+    {type:'秦漢',stem:'漢武帝派張騫出使西域，最直接的結果是？',opts:['佛教成為國教','促進漢與西域交流，帶動絲路發展','建立科舉','修築大運河'],ans:1,exp:'張騫通西域→東西交流增加→絲路發展。'},
+    {type:'魏晉南北朝',stem:'魏晉南北朝時北方戰亂、人口大量南遷。這對後世經濟的長遠影響是？',opts:['經濟重心南移「開始」','經濟重心南移「完成」','經濟完全停滯','北方經濟超越南方'],ans:0,exp:'人口南遷、江南開發，是經濟重心南移的「開始」（完成在南宋）。'},
+    {type:'魏晉南北朝',stem:'北魏孝文帝遷都洛陽、改漢姓、說漢語、鼓勵通婚，這些政策的核心意義是？',opts:['漢族單向同化胡人','促進胡漢雙向的民族融合','恢復游牧生活','對外擴張'],ans:1,exp:'孝文帝漢化改革促成「民族融合」（雙向，不是誰吃掉誰）。'},
+    {type:'隋唐',stem:'某制度讓人民透過考試取得做官資格，打破門第限制。它「最早開始」於哪一朝？',opts:['漢','隋','唐','宋'],ans:1,exp:'科舉最早開始於隋（完備於唐），別誤選唐。'},
+    {type:'隋唐',stem:'題目問「大運河的影響」，最恰當的答案是？',opts:['直接造成隋朝滅亡','連通南北、促進交通與經濟交流','使北方人口銳減','讓中國從此鎖國'],ans:1,exp:'大運河影響＝促進南北交通與經濟交流（長期正面）；看到楊廣就選「隋亡」是陷阱。'},
+    {type:'隋唐',stem:'唐代中央分為三個部門分工又互相牽制，以提高效率、避免權力過度集中，這是？',opts:['郡縣制','三省六部','推恩令','軍機處'],ans:1,exp:'三省六部（唐）＝中央分工制衡。'},
+    {type:'隋唐',stem:'唐朝長安聚集各國使節、商旅與遣唐使，極為國際化。這種開放氣度主要承接自？',opts:['嚴格鎖國','魏晉南北朝以來的民族融合','軍事極弱的討好','沒有他國存在'],ans:1,exp:'唐的國際化承接魏晉南北朝的民族大融合，養出開放包容的氣度。'},
+    {type:'宋',stem:'宋朝對外作戰常居弱勢，經濟文化卻達高峰。最能解釋的是？',opts:['放棄國防','重文輕武帶來政治安定，經濟文化蓬勃','周邊無強敵','軍事其實最強'],ans:1,exp:'重文輕武：代價是軍事弱、外患多，好處是經濟文化衝上巔峰。'},
+    {type:'宋',stem:'關於印刷術、指南針、火藥與宋朝的關係，最精準的說法是？',opts:['宋朝憑空發明三者','三者在宋代成熟並廣泛應用','清朝才出現','與宋無關'],ans:1,exp:'正確講法是「宋代成熟、廣泛應用」，不是「發明」（陷阱）。'},
+    {type:'宋',stem:'宋代出現一種便於攜帶交易、可代替金屬貨幣的紙製憑證，這是？',opts:['交子','推恩令','市舶司','軍機處'],ans:0,exp:'交子＝世界最早的紙幣，反映宋代商業發達。'},
+    {type:'宋',stem:'中國「經濟重心南移」的「完成」時間是？',opts:['魏晉南北朝','南宋','秦朝','唐初'],ans:1,exp:'開始＝魏晉南北朝、完成＝南宋（南方經濟徹底超越北方）。'},
+    {type:'元',stem:'元朝時東西方人員、商品、宗教、科技交流空前頻繁，主因是？',opts:['嚴格鎖國','蒙古帝國橫跨歐亞、打通東西交通','只有元朝存在','海路中斷'],ans:1,exp:'元的核心關鍵字是「交流」——蒙古橫跨歐亞、交通打通。'},
+    {type:'元',stem:'元朝在地方設「行省」管理廣大疆域。下列哪一制度最容易與行省混淆但性質不同？',opts:['唐的三省六部','秦的郡縣制','漢的推恩令','宋的重文輕武'],ans:0,exp:'行省（元·地方）≠ 三省六部（唐·中央），兩者都有「省」字最易混。'},
+    {type:'明清',stem:'某開國皇帝廢除丞相，改由六部直接對皇帝負責。這位皇帝是？',opts:['唐太宗','明太祖','元世祖','漢武帝'],ans:1,exp:'明太祖廢丞相，使皇權大幅提高。'},
+    {type:'明清',stem:'清朝設立某機構，大臣僅奉命辦事、傳達旨意，使皇權達到頂峰。此機構是？',opts:['三省六部','行省','軍機處','明代內閣'],ans:2,exp:'清朝軍機處＝皇權集中到中國歷史頂峰。'},
+    {type:'明清',stem:'明朝前期，一支當時世界規模最大的船隊多次遠航海外、宣揚國威。這是？',opts:['張騫通西域','鄭和下西洋','馬可波羅來華','玄奘取經'],ans:1,exp:'龐大船隊＋明朝前期＋遠航＝鄭和下西洋。'},
+    {type:'近代',stem:'某條約規定五口通商、割香港島、賠款。它是哪一場戰爭的結果？',opts:['甲午戰爭','第一次鴉片戰爭','八國聯軍','英法聯軍'],ans:1,exp:'五口通商＋割香港島＝南京條約，來自第一次鴉片戰爭。'},
+    {type:'近代',stem:'清廷戰敗後將台灣、澎湖割讓給日本。這場戰爭與條約是？',opts:['鴉片戰爭→南京條約','甲午戰爭→馬關條約','八國聯軍→辛丑條約','英法聯軍→北京條約'],ans:1,exp:'割台灣澎湖給日本＝甲午戰爭→馬關條約（別和「割香港島」混）。'},
+    {type:'近代',stem:'課本把鴉片戰爭、英法聯軍、甲午、八國聯軍放一起討論，主要想讓學生理解？',opts:['四個無關的獨立事件','外國勢力逐步加深、清朝壓力不斷增加的一條脈絡','都發生在同一年','都是中國主動發動'],ans:1,exp:'重點是看出「列強勢力一步步加深」的同一條故事線，而非背順序。'}
+  ];
+
+  var examBody=document.getElementById('examBody');
+  function renderExam(){
+    if(!examBody)return;
+    examBody.innerHTML=examQs.map(function(q,qi){
+      var opts=q.opts.map(function(o,oi){
+        return '<li data-o="'+oi+'"><span class="lab">'+LAB[oi]+'</span>'+o+'</li>';
+      }).join('');
+      return '<div class="quiz"><span class="exam-num">第 '+(qi+1)+' 題</span>'+
+        '<span class="qtype">'+q.type+'</span><div class="stem">'+q.stem+'</div>'+
+        '<ul class="opts" data-ans="'+q.ans+'" data-sel="-1">'+opts+'</ul>'+
+        '<div class="exp" hidden><b>解析：</b>'+q.exp+'</div></div>';
+    }).join('');
+  }
+  if(examBody){
+    renderExam();
+    examBody.addEventListener('click',function(e){
+      if(examBody.dataset.graded)return;
+      var li=e.target.closest('li[data-o]'); if(!li)return;
+      var ul=li.parentNode;
+      [].forEach.call(ul.children,function(c){c.classList.remove('sel');});
+      li.classList.add('sel'); ul.dataset.sel=li.dataset.o;
+    });
+    document.getElementById('examSubmit').addEventListener('click',function(){
+      if(examBody.dataset.graded)return;
+      examBody.dataset.graded='1';
+      var correct=0, total=examQs.length, blank=0;
+      [].forEach.call(examBody.querySelectorAll('.opts'),function(ul){
+        var ans=+ul.dataset.ans, sel=+ul.dataset.sel;
+        if(sel<0)blank++;
+        if(sel===ans)correct++;
+        [].forEach.call(ul.children,function(c){
+          c.classList.add('locked'); c.classList.remove('sel');
+          var i=+c.dataset.o;
+          if(i===ans)c.classList.add('correct');
+          else if(i===sel)c.classList.add('wrong');
+        });
+        var exp=ul.parentNode.querySelector('.exp'); if(exp)exp.hidden=false;
+      });
+      var score=Math.round(correct/total*100);
+      var msg=score>=90?'太強了，這份幾乎滿分！':score>=70?'不錯！把錯的幾題看一下解析就穩了。':score>=50?'及格邊緣，把錯題的觀念補起來再考一次。':'先別緊張，照著解析把歷史骨架重看一遍，會進步很快。';
+      if(blank>0)msg+='（有 '+blank+' 題未作答）';
+      var sc=document.getElementById('examScore');
+      sc.innerHTML='<div class="n">'+correct+' / '+total+'（'+score+' 分）</div><div class="msg">'+msg+'</div>';
+      sc.hidden=false;
+      sc.scrollIntoView({behavior:'smooth',block:'center'});
+    });
+    document.getElementById('examReset').addEventListener('click',function(){
+      delete examBody.dataset.graded;
+      var sc=document.getElementById('examScore'); sc.hidden=true; sc.innerHTML='';
+      renderExam();
+      document.getElementById('exam').scrollIntoView({behavior:'smooth',block:'start'});
     });
   }
 })();
