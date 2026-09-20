@@ -333,6 +333,9 @@
       <a href="#ch7">第七章</a>
       <a href="#review">總複習</a>
       <a href="#exam">複習卷</a>
+      <a href="#exam1">段考1</a>
+      <a href="#exam2">段考2</a>
+      <a href="#exam3">段考3</a>
     </nav>
     <button class="tbtn" id="theme" title="切換深淺色" aria-label="切換深淺色">◐</button>
   </div>
@@ -429,6 +432,21 @@
       <a class="chap" href="#exam">
         <div class="cn">複習卷</div><h3>段考型複習卷（全學期綜合）</h3>
         <p>七章綜合 22 題，作答後看分數與檢討。</p>
+        <span class="st ready">✓ 完整成品</span>
+      </a>
+      <a class="chap" href="#exam1">
+        <div class="cn">第一次段考</div><h3>第一次段考卷（位置・地形）</h3>
+        <p>第 1～2 章範圍 12 題，作答後看分數與檢討。</p>
+        <span class="st ready">✓ 完整成品</span>
+      </a>
+      <a class="chap" href="#exam2">
+        <div class="cn">第二次段考</div><h3>第二次段考卷（氣候・水文）</h3>
+        <p>第 3～4 章範圍 12 題，作答後看分數與檢討。</p>
+        <span class="st ready">✓ 完整成品</span>
+      </a>
+      <a class="chap" href="#exam3">
+        <div class="cn">第三次段考</div><h3>第三次段考卷（產業・人口・區域）</h3>
+        <p>第 5～7 章範圍 14 題，作答後看分數與檢討。</p>
         <span class="st ready">✓ 完整成品</span>
       </a>
     </div>
@@ -1280,6 +1298,42 @@
     </div>
   </section>
 
+  <!-- ================= 第一次段考卷 ================= -->
+  <section id="exam1">
+    <div class="sec-head"><span class="sec-num">TEST 1</span><h2>第一次段考卷：位置・地形</h2></div>
+    <p class="gps-note">範圍＝第 1～2 章（位置與範圍／地形），共 12 題。<b>先全部作答，再按「交卷」看分數與檢討</b>。全部原創題。</p>
+    <div class="exam-score" id="exam1Score" hidden></div>
+    <div id="exam1Body"></div>
+    <div class="exam-actions">
+      <button class="exam-btn" id="exam1Submit">交卷看分數</button>
+      <button class="exam-btn ghost" id="exam1Reset">重作</button>
+    </div>
+  </section>
+
+  <!-- ================= 第二次段考卷 ================= -->
+  <section id="exam2">
+    <div class="sec-head"><span class="sec-num">TEST 2</span><h2>第二次段考卷：氣候・水文</h2></div>
+    <p class="gps-note">範圍＝第 3～4 章（氣候／水文），共 12 題。<b>先全部作答，再按「交卷」看分數與檢討</b>。全部原創題。</p>
+    <div class="exam-score" id="exam2Score" hidden></div>
+    <div id="exam2Body"></div>
+    <div class="exam-actions">
+      <button class="exam-btn" id="exam2Submit">交卷看分數</button>
+      <button class="exam-btn ghost" id="exam2Reset">重作</button>
+    </div>
+  </section>
+
+  <!-- ================= 第三次段考卷 ================= -->
+  <section id="exam3">
+    <div class="sec-head"><span class="sec-num">TEST 3</span><h2>第三次段考卷：產業・人口・區域</h2></div>
+    <p class="gps-note">範圍＝第 5～7 章（產業／人口與都市／區域地理），共 14 題。<b>先全部作答，再按「交卷」看分數與檢討</b>。全部原創題。</p>
+    <div class="exam-score" id="exam3Score" hidden></div>
+    <div id="exam3Body"></div>
+    <div class="exam-actions">
+      <button class="exam-btn" id="exam3Submit">交卷看分數</button>
+      <button class="exam-btn ghost" id="exam3Reset">重作</button>
+    </div>
+  </section>
+
   <footer>
     <p class="disc">本講義為<b>原創教學設計</b>，不抄錄歷屆會考或學校試卷；題目均依公開試題的<b>題型與考點</b>重新設計。內容以翰林／康軒／南一三版本共同核心為準，實際授課請對照學生使用版本。地理數據（面積、人口等）會隨年份更新，請以最新資料為準。</p>
     <p>《八年級地理：不用死背的中國地理》· 第一章 完整成品 · 其餘章節製作中</p>
@@ -1590,33 +1644,32 @@
     {type:'區域',stem:'西北地區與青藏地區人口都稀疏，成因分別是？',opts:['都因乾燥','西北因乾燥（離海遠）、青藏因高寒（海拔高）','都因高寒','西北高寒、青藏乾燥'],ans:1,exp:'西北＝乾燥（離海遠）、青藏＝高寒（海拔高），成因不同。'}
   ];
 
-  var examBody=document.getElementById('examBody');
-  function renderExam(){
-    if(!examBody)return;
-    examBody.innerHTML=examQs.map(function(q,qi){
-      var opts=q.opts.map(function(o,oi){
-        return '<li data-o="'+oi+'"><span class="lab">'+LAB[oi]+'</span>'+o+'</li>';
+  function makeExam(prefix, arr){
+    var body=document.getElementById(prefix+'Body'); if(!body)return;
+    function render(){
+      body.innerHTML=arr.map(function(q,qi){
+        var opts=q.opts.map(function(o,oi){
+          return '<li data-o="'+oi+'"><span class="lab">'+LAB[oi]+'</span>'+o+'</li>';
+        }).join('');
+        return '<div class="quiz"><span class="exam-num">第 '+(qi+1)+' 題</span>'+
+          '<span class="qtype">'+q.type+'</span><div class="stem">'+q.stem+'</div>'+
+          '<ul class="opts" data-ans="'+q.ans+'" data-sel="-1">'+opts+'</ul>'+
+          '<div class="exp" hidden><b>解析：</b>'+q.exp+'</div></div>';
       }).join('');
-      return '<div class="quiz"><span class="exam-num">第 '+(qi+1)+' 題</span>'+
-        '<span class="qtype">'+q.type+'</span><div class="stem">'+q.stem+'</div>'+
-        '<ul class="opts" data-ans="'+q.ans+'" data-sel="-1">'+opts+'</ul>'+
-        '<div class="exp" hidden><b>解析：</b>'+q.exp+'</div></div>';
-    }).join('');
-  }
-  if(examBody){
-    renderExam();
-    examBody.addEventListener('click',function(e){
-      if(examBody.dataset.graded)return;
+    }
+    render();
+    body.addEventListener('click',function(e){
+      if(body.dataset.graded)return;
       var li=e.target.closest('li[data-o]'); if(!li)return;
       var ul=li.parentNode;
       [].forEach.call(ul.children,function(c){c.classList.remove('sel');});
       li.classList.add('sel'); ul.dataset.sel=li.dataset.o;
     });
-    document.getElementById('examSubmit').addEventListener('click',function(){
-      if(examBody.dataset.graded)return;
-      examBody.dataset.graded='1';
-      var correct=0, total=examQs.length, blank=0;
-      [].forEach.call(examBody.querySelectorAll('.opts'),function(ul){
+    document.getElementById(prefix+'Submit').addEventListener('click',function(){
+      if(body.dataset.graded)return;
+      body.dataset.graded='1';
+      var correct=0, total=arr.length, blank=0;
+      [].forEach.call(body.querySelectorAll('.opts'),function(ul){
         var ans=+ul.dataset.ans, sel=+ul.dataset.sel;
         if(sel<0)blank++;
         if(sel===ans)correct++;
@@ -1631,17 +1684,69 @@
       var score=Math.round(correct/total*100);
       var msg=score>=90?'太強了，這份幾乎滿分！':score>=70?'不錯！把錯的幾題看一下解析就穩了。':score>=50?'及格邊緣，把錯題的觀念補起來再考一次。':'先別緊張，照著解析把因果鏈重看一遍，會進步很快。';
       if(blank>0)msg+='（有 '+blank+' 題未作答）';
-      var sc=document.getElementById('examScore');
+      var sc=document.getElementById(prefix+'Score');
       sc.innerHTML='<div class="n">'+correct+' / '+total+'（'+score+' 分）</div><div class="msg">'+msg+'</div>';
       sc.hidden=false;
       sc.scrollIntoView({behavior:'smooth',block:'center'});
     });
-    document.getElementById('examReset').addEventListener('click',function(){
-      delete examBody.dataset.graded;
-      var sc=document.getElementById('examScore'); sc.hidden=true; sc.innerHTML='';
-      renderExam();
-      document.getElementById('exam').scrollIntoView({behavior:'smooth',block:'start'});
+    document.getElementById(prefix+'Reset').addEventListener('click',function(){
+      delete body.dataset.graded;
+      var sc=document.getElementById(prefix+'Score'); sc.hidden=true; sc.innerHTML='';
+      render();
+      document.getElementById(prefix).scrollIntoView({behavior:'smooth',block:'start'});
     });
   }
+
+  var exam1Qs=[
+    {type:'位置',stem:'中國的位置最正確的描述是？',opts:['亞洲東部、太平洋西岸','亞洲西部、印度洋沿岸','歐洲東部','大洋洲中部'],ans:0,exp:'中國位於亞洲東部、太平洋西岸，海陸兼備。'},
+    {type:'位置',stem:'中國東西跨經度廣，但全國統一使用的時間是？',opts:['依經度分多個時區','北京時間','格林威治時間','各省自訂'],ans:1,exp:'雖跨經度廣，行政上全國統一使用北京時間。'},
+    {type:'位置',stem:'中國「從熱到冷」什麼氣候都有，主因是？',opts:['工業發達','南北跨緯度廣','人口多','使用同一時間'],ans:1,exp:'南北跨緯度廣，故氣候由熱到冷一應俱全。'},
+    {type:'位置',stem:'關於中國的民族分布，正確的是？',opts:['只有漢族','以漢族為主，少數民族多在邊疆／西部','少數民族集中東部沿海','平均分布'],ans:1,exp:'以漢族為主，少數民族多分布於邊疆／西部。'},
+    {type:'地形',stem:'中國地勢的基本特徵是？',opts:['東高西低','西高東低，呈三級階梯','四周高、中間低','南高北低'],ans:1,exp:'西高東低、呈三級階梯，像下樓梯。'},
+    {type:'地形',stem:'中國大河多由西向東流，主因是？',opts:['季風方向','地勢西高東低','人口分布','緯度差異'],ans:1,exp:'地勢西高東低，水往低處流，故大河向東入海。'},
+    {type:'地形',stem:'有「世界屋脊」之稱、位於第一階梯的是？',opts:['華北平原','青藏高原','四川盆地','東北平原'],ans:1,exp:'青藏高原海拔最高，位於第一階梯。'},
+    {type:'地形',stem:'中國第二階梯以什麼地形為主？',opts:['平原、丘陵','高原、盆地','海洋','三角洲'],ans:1,exp:'第二階梯以高原、盆地為主；第三階梯才是平原丘陵。'},
+    {type:'地形',stem:'關於中國地形的組成，正確的是？',opts:['以平原為主','以山地、高原為主，平原集中東部','全為沙漠','全為盆地'],ans:1,exp:'中國以山地、高原為主，平原不多且集中東部（陷阱）。'},
+    {type:'地形',stem:'中國水力（水能）資源特別豐富的地方通常在？',opts:['平原中央','三大階梯的交界（落差大）','海邊','沙漠'],ans:1,exp:'階梯交界落差大、水流急，水力資源豐富。'},
+    {type:'地形',stem:'東北、華北、長江中下游平原位於第幾階梯？',opts:['第一階梯','第二階梯','第三階梯（最低、臨海）','都不是'],ans:2,exp:'平原丘陵位於最低的第三階梯，臨海。'},
+    {type:'地形',stem:'「地勢西高東低」對河流最直接的影響是？',opts:['河流南北流','河流由西向東入海','河流不流動','河流向西流'],ans:1,exp:'西高東低使大河由西向東奔流入海。'}
+  ];
+
+  var exam2Qs=[
+    {type:'氣候',stem:'中國東部夏季高溫多雨（雨熱同期），主因是？',opts:['冬季風帶來水氣','夏季風由海洋帶來水氣','地勢低','緯度高'],ans:1,exp:'夏季風由海洋帶來水氣，造成雨熱同期。'},
+    {type:'氣候',stem:'中國年降水量的分布大致是？',opts:['由東南向西北遞減','由西北向東南遞減','由北向南遞減','各地均等'],ans:0,exp:'夏季風來自東南海上，降水由東南向西北遞減。'},
+    {type:'氣候',stem:'某界線同時是 1 月 0°C 等溫線、年雨量 800mm 線，也是稻麥分界。它是？',opts:['黑河—騰衝線','秦嶺—淮河線','長江','崑崙山'],ans:1,exp:'集多條分界於一身的是秦嶺—淮河線。'},
+    {type:'氣候',stem:'西北地區氣候乾燥，主因是？',opts:['海拔太高','深居內陸、離海遠，夏季風難到','緯度太低','森林太多'],ans:1,exp:'西北深居內陸、離海遠，夏季風水氣到不了。'},
+    {type:'氣候',stem:'依季風與海拔，中國可分三大自然區。下列何者屬於這三區？',opts:['東部季風區','西北乾燥區','青藏高寒區','以上皆是'],ans:3,exp:'三大自然區＝東部季風區、西北乾燥區、青藏高寒區。'},
+    {type:'水文',stem:'中國最長的河流是？',opts:['黃河','長江','珠江','淮河'],ans:1,exp:'長江最長、水量最大（黃河第二長）。'},
+    {type:'水文',stem:'黃河含沙量世界最大，因中游流經？',opts:['黃土高原','青藏高原','東北平原','雲貴高原'],ans:0,exp:'黃河中游流經黃土高原，帶走大量泥沙。'},
+    {type:'水文',stem:'黃河下游河床高於兩岸地面、需靠堤防約束，稱為？',opts:['內流河','地上河（懸河）','黃金水道','三角洲'],ans:1,exp:'泥沙淤積使河床抬高，形成地上河（懸河）。'},
+    {type:'水文',stem:'「南水北調」工程的調水方向是？',opts:['由北往南','由南往北','由東往西','由西往東'],ans:1,exp:'南方水多、北方缺水，故由南往北調水。'},
+    {type:'水文',stem:'流不到海、最終消失於內陸的河流稱為？',opts:['外流河','內流河','地上河','黃金水道'],ans:1,exp:'內流河（如塔里木河）分布在乾燥西北。'},
+    {type:'水文',stem:'以秦嶺—淮河為界，冬季河流會結冰的是？',opts:['以南','以北','全國都結冰','全國都不結冰'],ans:1,exp:'秦嶺淮河以北冬季河流會結冰、以南不結冰。'},
+    {type:'水文',stem:'中國河流夏季水量特別大（汛期），主因是？',opts:['冬季風','夏季風帶來大量降雨','地勢','緯度'],ans:1,exp:'河流水量隨季風走，夏季雨多→汛期。'}
+  ];
+
+  var exam3Qs=[
+    {type:'產業',stem:'「南稻北麥」的差異，主要由什麼決定？',opts:['政府規定','南北氣候（水分與熱量）差異','人口多寡','海拔'],ans:1,exp:'稻要熱要水、麥較耐旱，由氣候決定。'},
+    {type:'產業',stem:'以秦嶺淮河為界，農業的正確配對是？',opts:['北方水田種稻','南方水田種稻、北方旱田種麥','南方旱田種麥','南北都種麥'],ans:1,exp:'南方＝水田稻米、北方＝旱田小麥。'},
+    {type:'產業',stem:'中國西北乾燥地區，主要發展的產業是？',opts:['水田稻作','畜牧業（草原放牧）','熱帶栽培','遠洋漁業'],ans:1,exp:'西北太乾，以畜牧業為主（東農西牧）。'},
+    {type:'產業',stem:'中國東部沿海比西部內陸更早、更發達，主因是？',opts:['沿海降水最少','沿海交通便利、對外貿易方便，並設經濟特區','沿海海拔最高','沿海無人口'],ans:1,exp:'沿海交通便利、貿易方便又設經濟特區，故先富。'},
+    {type:'產業',stem:'越往中國南方，一年可種植的次數（熟制）通常？',opts:['越少','越多（氣候較熱）','都一樣','不能種植'],ans:1,exp:'南方又熱又濕，熟制多、一年可種二至三次。'},
+    {type:'人口',stem:'中國人口分布的特徵與界線是？',opts:['西多東少，以長江為界','東南密集、西北稀疏，以黑河—騰衝線為界','平均分布','集中西部'],ans:1,exp:'人口東南密、西北疏，界線為黑河—騰衝線。'},
+    {type:'人口',stem:'中國東部人口特別密集，主因是？',opts:['海拔最高','地形平坦、氣候暖濕、經濟發達，適合居住','最乾旱','沒有都市'],ans:1,exp:'東部宜居又有工作機會，故人口密集。'},
+    {type:'人口',stem:'關於兩條界線的功能，正確的是？',opts:['兩條都分人口','秦嶺淮河分氣候農業、黑河騰衝分人口','秦嶺淮河分人口','兩條相同'],ans:1,exp:'秦嶺淮河＝氣候農業界線、黑河騰衝＝人口界線。'},
+    {type:'人口',stem:'「民工潮」的人口移動方向是？',opts:['由沿海往內陸','由都市往鄉村','由內陸／鄉村往東部沿海都市','由南往北'],ans:2,exp:'工作集中沿海城市，人口由內陸鄉村往東部沿海都市移動。'},
+    {type:'區域',stem:'四大地理區中，北方與南方的分界線是？',opts:['黑河—騰衝線','秦嶺—淮河線','長江','大興安嶺'],ans:1,exp:'北方與南方以秦嶺—淮河線分界。'},
+    {type:'區域',stem:'高寒、海拔極高、放牧犛牛、人口極稀疏，屬於哪一區？',opts:['南方地區','青藏地區','北方地區','西北地區'],ans:1,exp:'高寒＋犛牛＋世界屋脊＝青藏地區。'},
+    {type:'區域',stem:'深居內陸、氣候乾燥、靠綠洲灌溉、以畜牧為主，屬於？',opts:['西北地區','南方地區','青藏地區','北方地區'],ans:0,exp:'乾燥＋綠洲灌溉＋畜牧＝西北地區。'},
+    {type:'區域',stem:'亞熱帶濕熱、水田稻米、鄰海工商發達、人口密集，屬於？',opts:['北方地區','南方地區','西北地區','青藏地區'],ans:1,exp:'亞熱帶＋水田稻米＋沿海工商＝南方地區。'},
+    {type:'區域',stem:'西北與青藏人口都稀疏，但成因不同。正確的是？',opts:['都因乾燥','西北因乾燥（離海遠）、青藏因高寒（海拔高）','都因高寒','西北高寒、青藏乾燥'],ans:1,exp:'西北＝乾燥（離海遠）、青藏＝高寒（海拔高）。'}
+  ];
+
+  makeExam('exam', examQs);
+  makeExam('exam1', exam1Qs);
+  makeExam('exam2', exam2Qs);
+  makeExam('exam3', exam3Qs);
 })();
 </script>
