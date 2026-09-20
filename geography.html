@@ -232,6 +232,41 @@
   table.rev tbody tr:nth-child(even) td{background:color-mix(in srgb,var(--paper) 55%,transparent)}
   table.rev td{color:var(--ink)}
 
+  /* 總複習速查表 */
+  #review{background:var(--paper-2);border:1px solid var(--line-strong);border-radius:18px;
+    padding:20px 20px 26px;margin-top:34px;box-shadow:var(--shadow)}
+  .sheet-hero{font-family:var(--serif);font-weight:900;text-align:center;
+    font-size:clamp(14px,3.2vw,18px);line-height:1.6;color:var(--brand);
+    background:var(--brand-soft);border-radius:12px;padding:12px 14px;margin:0 0 18px}
+  .rev-h{font-family:var(--serif);font-weight:900;font-size:17px;margin:24px 0 10px;
+    display:flex;align-items:center;gap:8px}
+  .chain{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:10px 0}
+  .chain .s{background:var(--card);border:1px solid var(--line-strong);border-radius:9px;
+    padding:7px 11px;font-weight:700;font-size:13.5px;box-shadow:var(--shadow)}
+  .chain .s small{display:block;font-weight:500;color:var(--ink-soft);font-size:11.5px}
+  .chain .s.hl{background:var(--brand);color:#fff;border-color:var(--brand)}
+  .chain .a{color:var(--brand);font-weight:900}
+  .twocol{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  @media(max-width:560px){.twocol{grid-template-columns:1fr}}
+  .mini{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:11px 13px;
+    box-shadow:var(--shadow);font-size:13.5px;line-height:1.6}
+  .mini b{color:var(--brand)}
+  .kougo{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px}
+  .kougo .k{background:var(--gold-soft);border:1px solid var(--gold);border-radius:9px;
+    padding:9px 12px;font-family:var(--serif);font-weight:700;font-size:14px;line-height:1.5}
+  .kougo .k b{color:var(--brand);font-family:var(--sans);font-size:11.5px;display:block;font-weight:700}
+  .printbtn{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--brand);
+    background:var(--brand);color:#fff;border-radius:10px;padding:9px 16px;font-size:14px;
+    font-weight:700;cursor:pointer;font-family:var(--sans)}
+  .printbtn:hover{filter:brightness(1.06)}
+  .printhint{font-size:12.5px;color:var(--ink-soft);margin-top:8px}
+  @media print{
+    .bar,footer,.printbtn,.printhint{display:none!important}
+    #review{border:0;box-shadow:none;background:#fff;padding:0}
+    body{background:#fff}
+    *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  }
+
   /* SVG 圖解 */
   .figure{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
     padding:16px;margin:18px 0;box-shadow:var(--shadow)}
@@ -282,6 +317,7 @@
       <a href="#ch5">第五章</a>
       <a href="#ch6">第六章</a>
       <a href="#ch7">第七章</a>
+      <a href="#review">總複習</a>
     </nav>
     <button class="tbtn" id="theme" title="切換深淺色" aria-label="切換深淺色">◐</button>
   </div>
@@ -370,11 +406,11 @@
         <p>北、南、西各有一套環境與生活。</p>
         <span class="st ready">✓ 完整成品</span>
       </a>
-      <div class="chap disabled">
+      <a class="chap" href="#review">
         <div class="cn">總複習</div><h3>中國地理一張表複習完</h3>
-        <p>最後把整條因果鏈濃縮成一張速查表。</p>
-        <span class="st soon">製作中</span>
-      </div>
+        <p>把整條因果鏈濃縮成一張速查表，可列印。</p>
+        <span class="st ready">✓ 完整成品</span>
+      </a>
     </div>
   </section>
 
@@ -1121,6 +1157,97 @@
 
   </section>
 
+  <!-- ================= 總複習速查表 ================= -->
+  <section id="review">
+    <div class="sec-head"><span class="sec-num">A4</span><h2>總複習：中國地理一張表複習完</h2></div>
+    <p class="gps-note">考前把這一張看熟就夠了。想帶著走就按下面的按鈕，直接列印或存成 PDF。</p>
+    <button class="printbtn" id="printBtn">🖨 列印 / 存成 PDF</button>
+    <p class="printhint">＊只會印出這張總複習表，不會把整份講義印出來。</p>
+
+    <div class="sheet-hero" style="margin-top:18px">
+      因果鏈：位置 → 地形 → 氣候 → 水文 → 產業 → 人口 → 區域
+    </div>
+
+    <!-- 主表 -->
+    <div class="rev-h">📜 七大主題速查表</div>
+    <div class="tblwrap">
+      <table class="rev">
+        <thead><tr><th>主題</th><th>核心一句</th><th>必記關鍵字</th><th>口訣</th></tr></thead>
+        <tbody>
+          <tr><th>位置</th><td>海陸兼備的大塊頭</td><td>亞洲東部·太平洋西岸·跨緯度廣·全國用北京時間</td><td>海陸兼備、什麼都有</td></tr>
+          <tr><th>地形</th><td>西高東低三階梯</td><td>①青藏高原 ②高原盆地 ③平原丘陵</td><td>西高東低，三階下樓梯</td></tr>
+          <tr><th>氣候</th><td>季風主宰乾濕</td><td>夏季風海來帶雨·冬季風陸來乾冷·雨熱同期</td><td>夏海來帶雨、冬陸來乾冷</td></tr>
+          <tr><th>水文</th><td>大河向東流</td><td>長江最長·黃河含沙最多成地上河·外流/內流</td><td>水往低處流，大河向東</td></tr>
+          <tr><th>產業</th><td>南稻北麥</td><td>南水田稻·北旱田麥·東農西牧·沿海先富</td><td>南稻北麥、東農西牧</td></tr>
+          <tr><th>人口</th><td>東多西少</td><td>黑河騰衝線·東南密西北疏·民工潮</td><td>人往東、往沿海、往都市</td></tr>
+          <tr><th>區域</th><td>四大地理區</td><td>北方·南方·西北·青藏</td><td>北麥南稻、西北牧、青藏寒</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 三大跨章因果 -->
+    <div class="rev-h">🔗 三條一定要懂的因果鏈</div>
+    <div class="mini" style="margin-bottom:8px"><b>① 地形 → 水文</b></div>
+    <div class="chain">
+      <span class="s">西高東低<small>地勢</small></span><span class="a">→</span>
+      <span class="s">大河由西向東流</span><span class="a">＋</span>
+      <span class="s hl">交界落差大 → 水力豐富</span>
+    </div>
+    <div class="mini" style="margin:12px 0 8px"><b>② 氣候 → 產業</b></div>
+    <div class="chain">
+      <span class="s">季風乾濕<small>秦嶺淮河</small></span><span class="a">→</span>
+      <span class="s">南稻北麥</span><span class="a">＋</span>
+      <span class="s hl">東農西牧</span>
+    </div>
+    <div class="mini" style="margin:12px 0 8px"><b>③ 環境 → 人口</b></div>
+    <div class="chain">
+      <span class="s">東部平坦暖濕<small>宜居</small></span><span class="a">→</span>
+      <span class="s hl">東多西少<small>黑河騰衝線</small></span>
+    </div>
+
+    <!-- 兩條招牌界線 -->
+    <div class="rev-h">👑 兩條招牌界線（別搞混）</div>
+    <div class="twocol">
+      <div class="mini"><b>秦嶺—淮河線</b>（氣候農業·橫線）<br>1月 0°C ｜ 年雨 800mm ｜ 稻⇄麥 ｜ 水田⇄旱田 ｜ 結冰⇄不結冰</div>
+      <div class="mini"><b>黑河—騰衝線</b>（人口·斜線）<br>東南人口密集 ｜ 西北人口稀疏</div>
+    </div>
+
+    <!-- 四大地理區 -->
+    <div class="rev-h">🗺 四大地理區</div>
+    <div class="twocol">
+      <div class="mini"><b>北方</b>：秦嶺淮河以北 · 溫帶 · 旱田小麥 · 東北重工業</div>
+      <div class="mini"><b>南方</b>：以南 · 亞熱帶濕熱 · 水田稻米 · 沿海工商發達</div>
+      <div class="mini"><b>西北</b>：內陸乾燥 · 畜牧＋綠洲灌溉 · 人口稀疏</div>
+      <div class="mini"><b>青藏</b>：地勢最高 · 高寒 · 高山畜牧（犛牛）</div>
+    </div>
+
+    <!-- 口訣總表 -->
+    <div class="rev-h">🧠 七大記憶口訣</div>
+    <div class="kougo">
+      <div class="k"><b>位置</b>海陸兼備、什麼都有</div>
+      <div class="k"><b>地形</b>西高東低，三階下樓梯</div>
+      <div class="k"><b>氣候</b>夏海來帶雨、冬陸來乾冷</div>
+      <div class="k"><b>水文</b>水往低處流，大河向東</div>
+      <div class="k"><b>產業</b>南稻北麥、東農西牧</div>
+      <div class="k"><b>人口</b>人往東、往沿海、往都市</div>
+      <div class="k"><b>區域</b>北麥南稻、西北牧、青藏寒</div>
+    </div>
+
+    <!-- 陷阱總表 -->
+    <div class="rev-h">⚠️ 高頻陷阱一次收</div>
+    <div class="twocol">
+      <div class="mini"><b>北京時間</b>：跨經度廣，卻全國用同一時間</div>
+      <div class="mini"><b>雨量</b>：由東南向西北遞減（不是南北）</div>
+      <div class="mini"><b>兩條線</b>：秦嶺淮河＝氣候農業、黑河騰衝＝人口</div>
+      <div class="mini"><b>最長河</b>：長江（黃河第二長）</div>
+      <div class="mini"><b>含沙／地上河／母親河</b>：都是黃河</div>
+      <div class="mini"><b>南水北調</b>：由南往北</div>
+      <div class="mini"><b>南稻北麥</b>別記反（南水田稻、北旱田麥）</div>
+      <div class="mini"><b>西北乾燥</b>(離海遠) ≠ <b>青藏高寒</b>(海拔高)</div>
+      <div class="mini"><b>地形</b>以山地高原為主（不是平原）</div>
+    </div>
+  </section>
+
   <footer>
     <p class="disc">本講義為<b>原創教學設計</b>，不抄錄歷屆會考或學校試卷；題目均依公開試題的<b>題型與考點</b>重新設計。內容以翰林／康軒／南一三版本共同核心為準，實際授課請對照學生使用版本。地理數據（面積、人口等）會隨年份更新，請以最新資料為準。</p>
     <p>《八年級地理：不用死背的中國地理》· 第一章 完整成品 · 其餘章節製作中</p>
@@ -1385,5 +1512,24 @@
      exp:'關鍵區分：<b>西北＝乾燥（深居內陸、離海遠）</b>；<b>青藏＝高寒（海拔太高）</b>。結果都人口稀疏，但成因不同，常被拿來當陷阱。'}
   ];
   mountQuiz('quizzes7', qs7);
+
+  /* 只列印總複習表 */
+  var pb=document.getElementById('printBtn');
+  if(pb){
+    pb.addEventListener('click',function(){
+      var review=document.getElementById('review');
+      var hidden=[];
+      document.querySelectorAll('header.bar, .wrap > *').forEach(function(el){
+        if(el!==review && !el.hidden){ el.hidden=true; hidden.push(el); }
+      });
+      function restore(){
+        hidden.forEach(function(el){el.hidden=false;});
+        window.removeEventListener('afterprint',restore);
+      }
+      window.addEventListener('afterprint',restore);
+      window.print();
+      setTimeout(restore, 1500);
+    });
+  }
 })();
 </script>
